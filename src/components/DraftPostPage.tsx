@@ -1,11 +1,11 @@
 'use client'
 
 import { useQuerySubscription } from 'react-datocms/use-query-subscription'
-import { PostIndex } from '@/components/PostIndex'
+import { PostPage } from '@/components/PostPage'
 
 // @ts-ignore
-export function DraftPostIndex({ subscription }) {
+export function DraftPostPage({ subscription }) {
   const { data } = useQuerySubscription(subscription)
 
-  return <PostIndex data={data} />
+  return <PostPage data={data} />
 }
