@@ -25,7 +25,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - DatoCMS live preview, draft mode
 - i18n with next-intl
 - ui library with shadcn/ui
-- sitemap with next-sitemap
+- robots and sitemap with next-sitemap
 - generated types with graphql-codegen
 - pre-commit lint and formatting with husky and lint-staged
 
