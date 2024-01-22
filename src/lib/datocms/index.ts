@@ -33,6 +33,7 @@ const fetchDatoContent = async (
   const response = await fetch(URL, options)
 
   const responseBody = await response.json()
+  console.log(responseBody)
 
   if (!response.ok) {
     throw new Error(
@@ -64,13 +65,18 @@ export async function performRequest({
   visualEditingBaseUrl,
   revalidate,
 }: RequestParams) {
-  const { data } = await dedupedFetch(
-    JSON.stringify({ query, variables, revalidate }),
-    includeDrafts,
-    excludeInvalid,
-    visualEditingBaseUrl,
-    revalidate,
-  )
+  try {
+    const { data } = await dedupedFetch(
+      JSON.stringify({ query, variables, revalidate }),
+      includeDrafts,
+      excludeInvalid,
+      visualEditingBaseUrl,
+      revalidate,
+    )
 
-  return data
+    return data
+  } catch (e) {
+    console.log(`[ performRequest ] error: ${e}`)
+    return null
+  }
 }

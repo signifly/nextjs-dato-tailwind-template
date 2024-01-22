@@ -4,11 +4,23 @@ import '../globals.css'
 import { Alert } from '@/components/Alert'
 import { Footer } from '@/components/Footer'
 import { locales, Locales, defaultLocale } from '@/i18n'
-
+import { performRequest } from '@/lib/datocms'
 import { draftMode } from 'next/headers'
 import { Container } from '@/components/Container'
+import { SITE_QUERY } from '@/lib/datocms/queries/site'
+import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
 const inter = Inter({ subsets: ['latin'] })
+
+function getLayoutRequest(locale: Locales) {
+  const { isEnabled } = draftMode()
+
+  return {
+    query: SITE_QUERY,
+    includeDrafts: isEnabled,
+    variables: { locale },
+  }
+}
 
 export function generateStaticParams() {
   return process.env.ENABLE_I18N === 'true'
@@ -27,13 +39,32 @@ type LocaleLayoutProps = Readonly<{
   params: { locale: Locales }
 }>
 
-export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { isEnabled } = draftMode()
+
+  const layoutRequest = getLayoutRequest(params.locale)
+  const data = await performRequest(layoutRequest)
+  console.log({ layoutRequest, data })
 
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
         <div className="min-h-screen">
+          {data?.header?.blocks.map(
+            (block: any) =>
+              block.id && (
+                <ComponentParser
+                  key={block.id}
+                  data={{
+                    ...block,
+                    // _allSlugLocales: pageData.homePage._allSlugLocales,
+                  }}
+                />
+              ),
+          )}
           <Alert preview={isEnabled} />
           <main>
             <Container>{children}</Container>

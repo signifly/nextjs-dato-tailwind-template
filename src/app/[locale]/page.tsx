@@ -1,65 +1,37 @@
 import { draftMode } from 'next/headers'
 import { toNextMetadata } from 'react-datocms'
-
-import { performRequest } from '@/lib/datocms'
-import { metaTagsFragment, responsiveImageFragment } from '@/lib/fragments'
-
+import { performRequest } from '@/lib/datocms/'
 import { DraftPostIndex } from '@/components/DraftPostIndex'
 import { PostIndex } from '@/components/PostIndex'
+import { Locale } from 'date-fns'
+import { HOME_PAGE_QUERY } from '@/lib/datocms/queries/homePage'
 
-const PAGE_CONTENT_QUERY = `
-  {
-    site: _site {
-      favicon: faviconMetaTags {
-        ...metaTagsFragment
-      }
-    }
-    blog {
-      seo: _seoMetaTags {
-        ...metaTagsFragment
-      }
-    }
-    allPosts(orderBy: date_DESC, first: 20) {
-      title
-      slug
-      excerpt
-      date
-      coverImage {
-        responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 2000, h: 1000 }) {
-          ...responsiveImageFragment
-        }
-      }
-      author {
-        name
-        picture {
-          responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 100, h: 100, sat: -100}) {
-            ...responsiveImageFragment
-          }
-        }
-      }
-    }
-  }
-
-  ${metaTagsFragment}
-  ${responsiveImageFragment}
-`
-
-function getPageRequest() {
+function getPageRequest(locale: Locale) {
   const { isEnabled } = draftMode()
 
-  return { query: PAGE_CONTENT_QUERY, includeDrafts: isEnabled }
+  return {
+    query: HOME_PAGE_QUERY,
+    includeDrafts: isEnabled,
+    variables: { locale },
+  }
 }
 
-export async function generateMetadata() {
-  const { site, blog } = await performRequest(getPageRequest())
+type HomePageProps = {
+  params: {
+    locale: Locale
+  }
+}
+
+export async function generateMetadata({ params }: HomePageProps) {
+  const { site, blog } = await performRequest(getPageRequest(params.locale))
 
   return toNextMetadata([...site.favicon, ...blog.seo])
 }
 
-export default async function Page() {
+export default async function Page({ params }: HomePageProps) {
   const { isEnabled } = draftMode()
 
-  const pageRequest = getPageRequest()
+  const pageRequest = getPageRequest(params.locale)
   const data = await performRequest(pageRequest)
 
   if (isEnabled) {
