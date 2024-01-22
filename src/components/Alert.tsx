@@ -5,7 +5,7 @@ export function Alert({ preview }: { preview: boolean }) {
   return (
     <div
       className={cn('border-b', {
-        'bg-accent-7 border-accent-7 text-white': preview,
+        'border-black bg-black text-white': preview,
         'bg-accent-1 border-accent-2': !preview,
       })}
     >
@@ -26,7 +26,7 @@ export function Alert({ preview }: { preview: boolean }) {
             <>
               This is page is showing published content.{' '}
               <a
-                href="/api/draft"
+                href={`/api/draft?secret=${process.env.NEXT_DATOCMS_PREVIEW_SECRET}`}
                 className="hover:text-success underline transition-colors duration-200"
               >
                 Click here
