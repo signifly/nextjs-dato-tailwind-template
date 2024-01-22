@@ -9,6 +9,7 @@ const corsInitOptions = {
   },
 }
 
+// @todo: add production baseURL here
 const baseUrl = process.env.VERCEL_BRANCH_URL
   ? // Vercel auto-populates this environment variable
     `https://${process.env.VERCEL_BRANCH_URL}`
