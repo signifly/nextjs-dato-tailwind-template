@@ -33,7 +33,6 @@ const fetchDatoContent = async (
   const response = await fetch(URL, options)
 
   const responseBody = await response.json()
-  console.log(responseBody)
 
   if (!response.ok) {
     throw new Error(

@@ -1,9 +1,12 @@
-import {
-  metaTagsFragment,
-  responsiveImageFragment,
-} from '@/lib/datocms/fragments'
+import { gql } from 'graphql-request'
 
-export const HOME_PAGE_QUERY = `
+import { metaTagsFragment } from '@/lib/datocms/fragments/metaTagsFragment'
+import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
+
+export const HOME_PAGE_QUERY = gql`
+  ${metaTagsFragment}
+  ${responsiveImageFragment}
+
   query PageContentQuery($locale: SiteLocale) {
     site: _site {
       favicon: faviconMetaTags {
@@ -14,7 +17,7 @@ export const HOME_PAGE_QUERY = `
       seo: _seoMetaTags {
         ...metaTagsFragment
       }
-			title
+      title
     }
     allPosts(orderBy: date_DESC, first: 20) {
       title
@@ -22,21 +25,20 @@ export const HOME_PAGE_QUERY = `
       excerpt
       date
       coverImage {
-        responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 2000, h: 1000 }) {
+        responsiveImage(imgixParams: { fm: jpg, fit: crop, w: 2000, h: 1000 }) {
           ...responsiveImageFragment
         }
       }
       author {
         name
         picture {
-          responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 100, h: 100, sat: -100}) {
+          responsiveImage(
+            imgixParams: { fm: jpg, fit: crop, w: 100, h: 100, sat: -100 }
+          ) {
             ...responsiveImageFragment
           }
         }
       }
     }
   }
-
-  ${metaTagsFragment}
-  ${responsiveImageFragment}
 `

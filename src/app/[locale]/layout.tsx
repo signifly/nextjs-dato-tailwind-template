@@ -47,7 +47,6 @@ export default async function LocaleLayout({
 
   const layoutRequest = getLayoutRequest(params.locale)
   const data = await performRequest(layoutRequest)
-  console.log({ layoutRequest, data })
 
   return (
     <html lang={params.locale}>
