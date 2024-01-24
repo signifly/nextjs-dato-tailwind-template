@@ -7,10 +7,11 @@ import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImage
 
 import { DraftPostPage } from '@/components/DraftPostPage'
 import { PostPage } from '@/components/PostPage'
+import { unstable_setRequestLocale } from 'next-intl/server'
+import { Locale } from '@/i18n'
 
 export async function generateStaticParams() {
   const { allPosts } = await performRequest({ query: `{ allPosts { slug } }` })
-
   return allPosts.map(({ slug }: any) => slug)
 }
 
@@ -101,10 +102,19 @@ export async function generateMetadata({ params }: any) {
   return toNextMetadata([...site.favicon, ...post.seo])
 }
 
-export default async function Page({ params }: any) {
+type PageProps = {
+  params: {
+    slug: string
+    locale: Locale
+  }
+}
+
+export default async function Page({ params }: PageProps) {
+  const { locale, slug } = params
+  unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
 
-  const pageRequest = getPageRequest(params.slug)
+  const pageRequest = getPageRequest(slug)
   const data = await performRequest(pageRequest)
 
   if (isEnabled) {

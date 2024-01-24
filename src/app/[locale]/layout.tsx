@@ -3,16 +3,17 @@ import { Inter } from 'next/font/google'
 import '../globals.css'
 import { Alert } from '@/components/Alert'
 import { Footer } from '@/components/Footer'
-import { locales, Locales, defaultLocale } from '@/i18n'
+import { locales, Locale, defaultLocale } from '@/i18n'
 import { performRequest } from '@/lib/datocms'
 import { draftMode } from 'next/headers'
 import { Container } from '@/components/Container'
 import { SITE_QUERY } from '@/lib/datocms/queries/site'
 import { ComponentParser } from '@/lib/datocms/ComponentParser'
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 const inter = Inter({ subsets: ['latin'] })
 
-function getLayoutRequest(locale: Locales) {
+function getLayoutRequest(locale: Locale) {
   const { isEnabled } = draftMode()
 
   return {
@@ -36,20 +37,22 @@ export const metadata: Metadata = {
 
 type LocaleLayoutProps = Readonly<{
   children: React.ReactNode
-  params: { locale: Locales }
+  params: { locale: Locale }
 }>
 
 export default async function LocaleLayout({
   children,
   params,
 }: LocaleLayoutProps) {
+  const { locale } = params
+  unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
 
-  const layoutRequest = getLayoutRequest(params.locale)
+  const layoutRequest = getLayoutRequest(locale)
   const data = await performRequest(layoutRequest)
 
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className={inter.className}>
         <div className="min-h-screen">
           {data?.header?.blocks.map(

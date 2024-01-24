@@ -3,8 +3,9 @@ import { toNextMetadata } from 'react-datocms'
 import { performRequest } from '@/lib/datocms/'
 import { DraftPostIndex } from '@/components/DraftPostIndex'
 import { PostIndex } from '@/components/PostIndex'
-import { Locale } from 'date-fns'
 import { HOME_PAGE_QUERY } from '@/lib/datocms/queries/homePage'
+import { unstable_setRequestLocale } from 'next-intl/server'
+import { Locale } from '@/i18n'
 
 function getPageRequest(locale: Locale) {
   const { isEnabled } = draftMode()
@@ -29,9 +30,11 @@ export async function generateMetadata({ params }: HomePageProps) {
 }
 
 export default async function Page({ params }: HomePageProps) {
+  const { locale } = params
+  unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
 
-  const pageRequest = getPageRequest(params.locale)
+  const pageRequest = getPageRequest(locale)
   const data = await performRequest(pageRequest)
 
   if (isEnabled) {
