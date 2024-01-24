@@ -2,12 +2,9 @@ import { draftMode } from 'next/headers'
 import { toNextMetadata } from 'react-datocms'
 
 import { performRequest } from '@/lib/datocms'
-import { metaTagsFragment } from '@/lib/datocms/fragments/metaTagsFragment'
-import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
 import { POST_BY_SLUG_QUERY } from '@/lib/datocms/queries/blogPost'
 
-import { DraftPostPage } from '@/components/DraftPostPage'
-import { PostPage } from '@/components/PostPage'
+import { DraftHomePage, HomePage } from '@/components/pages/HomePage'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Locale } from '@/i18n'
 
@@ -50,7 +47,7 @@ export default async function Page({ params }: PageProps) {
 
   if (isEnabled) {
     return (
-      <DraftPostPage
+      <DraftHomePage
         subscription={{
           ...pageRequest,
           initialData: data,
@@ -61,5 +58,5 @@ export default async function Page({ params }: PageProps) {
     )
   }
 
-  return <PostPage data={data} />
+  return <HomePage data={data} />
 }

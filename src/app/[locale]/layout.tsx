@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
-// import { Alert } from '@/components/Alert'
+import { Alert } from '@/components/Alert'
 import { Footer } from '@/components/Footer'
 import { locales, Locale, defaultLocale } from '@/i18n'
 import { performRequest } from '@/lib/datocms'
@@ -55,6 +55,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={inter.className}>
         <div className="min-h-screen">
+          <Alert preview={isEnabled} />
           {data?.header?.blocks.map(
             (block: any) =>
               block.id && (
@@ -67,7 +68,6 @@ export default async function LocaleLayout({
                 />
               ),
           )}
-          {/* <Alert preview={isEnabled} /> */}
           <main>
             <Container>{children}</Container>
           </main>

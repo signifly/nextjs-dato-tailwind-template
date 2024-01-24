@@ -24,9 +24,9 @@ type HomePageProps = {
 }
 
 export async function generateMetadata({ params }: HomePageProps) {
-  const { site, blog } = await performRequest(getPageRequest(params.locale))
+  const { site, homePage } = await performRequest(getPageRequest(params.locale))
 
-  return toNextMetadata([...site.favicon, ...blog.seo])
+  return toNextMetadata([...site.favicon, ...homePage.seo])
 }
 
 export default async function Page({ params }: HomePageProps) {

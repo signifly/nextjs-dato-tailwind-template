@@ -8,7 +8,7 @@ export const buttonFragment = gql`
     size
     useExternalLink
     linkTo {
-      ... on BlogRecord {
+      ... on HomePageRecord {
         id
         _modelApiKey
       }

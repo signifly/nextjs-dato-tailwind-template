@@ -128,63 +128,13 @@ export type BannerBlockRecord_SeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>
 }
 
-/** Record of type Blog (blog) */
-export type BlogRecord = RecordInterface & {
-  __typename?: 'BlogRecord'
-  _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>
-  _allTitleLocales?: Maybe<Array<StringNonNullMultiLocaleField>>
-  _createdAt: Scalars['DateTime']['output']
-  /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
-  _isValid: Scalars['BooleanType']['output']
-  _modelApiKey: Scalars['String']['output']
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>
-  /** Generates SEO and Social card meta tags to be used in your frontend */
-  _seoMetaTags: Array<Tag>
-  _status: ItemStatus
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
-  _updatedAt: Scalars['DateTime']['output']
-  id: Scalars['ItemId']['output']
-  seo?: Maybe<SeoField>
-  title: Scalars['String']['output']
-}
-
-/** Record of type Blog (blog) */
-export type BlogRecord_AllSeoLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-}
-
-/** Record of type Blog (blog) */
-export type BlogRecord_AllTitleLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-}
-
-/** Record of type Blog (blog) */
-export type BlogRecord_SeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** Record of type Blog (blog) */
-export type BlogRecordSeoArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** Record of type Blog (blog) */
-export type BlogRecordTitleArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  locale?: InputMaybe<SiteLocale>
-}
-
 /** Specifies how to filter Boolean fields */
 export type BooleanFilter = {
   /** Search for records with an exact match */
   eq?: InputMaybe<Scalars['BooleanType']['input']>
 }
 
-export type ButtonModelLinkToField = AuthorRecord | BlogRecord | PostRecord
+export type ButtonModelLinkToField = AuthorRecord | HomePageRecord | PostRecord
 
 /** Block of type Button (button) */
 export type ButtonRecord = RecordInterface & {
@@ -606,6 +556,56 @@ export type HeaderRecordBlocksArgs = {
 
 /** Record of type Header (header) */
 export type HeaderRecordNameArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Record of type Home Page (home_page) */
+export type HomePageRecord = RecordInterface & {
+  __typename?: 'HomePageRecord'
+  _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>
+  _allTitleLocales?: Maybe<Array<StringNonNullMultiLocaleField>>
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  id: Scalars['ItemId']['output']
+  seo?: Maybe<SeoField>
+  title: Scalars['String']['output']
+}
+
+/** Record of type Home Page (home_page) */
+export type HomePageRecord_AllSeoLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+}
+
+/** Record of type Home Page (home_page) */
+export type HomePageRecord_AllTitleLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+}
+
+/** Record of type Home Page (home_page) */
+export type HomePageRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Record of type Home Page (home_page) */
+export type HomePageRecordSeoArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Record of type Home Page (home_page) */
+export type HomePageRecordTitleArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>
   locale?: InputMaybe<SiteLocale>
 }
@@ -2319,14 +2319,14 @@ export type Query = {
   allUploads: Array<FileField>
   /** Returns a specific record */
   author?: Maybe<AuthorRecord>
-  /** Returns the single instance record */
-  blog?: Maybe<BlogRecord>
   /** Returns a specific record */
   category?: Maybe<CategoryRecord>
   /** Returns the single instance record */
   footer?: Maybe<FooterRecord>
   /** Returns the single instance record */
   header?: Maybe<HeaderRecord>
+  /** Returns the single instance record */
+  homePage?: Maybe<HomePageRecord>
   /** Returns the single instance record */
   menu?: Maybe<MenuRecord>
   /** Returns a specific record */
@@ -2414,12 +2414,6 @@ export type QueryAuthorArgs = {
 }
 
 /** The query root for this schema */
-export type QueryBlogArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** The query root for this schema */
 export type QueryCategoryArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>
   filter?: InputMaybe<CategoryModelFilter>
@@ -2435,6 +2429,12 @@ export type QueryFooterArgs = {
 
 /** The query root for this schema */
 export type QueryHeaderArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** The query root for this schema */
+export type QueryHomePageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>
   locale?: InputMaybe<SiteLocale>
 }
@@ -3036,7 +3036,7 @@ export type NavigationBlockFragmentFragment = {
       externalLink?: string | null
       linkTo?:
         | { __typename?: 'AuthorRecord' }
-        | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+        | { __typename?: 'HomePageRecord'; id: string; _modelApiKey: string }
         | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
         | null
     }>
@@ -3051,7 +3051,7 @@ export type NavigationBlockFragmentFragment = {
     externalLink?: string | null
     linkTo?:
       | { __typename?: 'AuthorRecord' }
-      | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+      | { __typename?: 'HomePageRecord'; id: string; _modelApiKey: string }
       | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
       | null
   }>
@@ -3067,7 +3067,7 @@ export type ButtonFragmentFragment = {
   externalLink?: string | null
   linkTo?:
     | { __typename?: 'AuthorRecord' }
-    | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+    | { __typename?: 'HomePageRecord'; id: string; _modelApiKey: string }
     | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
     | null
 }
@@ -3241,8 +3241,8 @@ export type HomePageQueryQuery = {
       tag: string
     }>
   }
-  blog?: {
-    __typename?: 'BlogRecord'
+  homePage?: {
+    __typename?: 'HomePageRecord'
     title: string
     seo: Array<{
       __typename?: 'Tag'
@@ -3346,7 +3346,7 @@ export type SiteQueryQuery = {
               linkTo?:
                 | { __typename?: 'AuthorRecord' }
                 | {
-                    __typename?: 'BlogRecord'
+                    __typename?: 'HomePageRecord'
                     id: string
                     _modelApiKey: string
                   }
@@ -3368,7 +3368,11 @@ export type SiteQueryQuery = {
             externalLink?: string | null
             linkTo?:
               | { __typename?: 'AuthorRecord' }
-              | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+              | {
+                  __typename?: 'HomePageRecord'
+                  id: string
+                  _modelApiKey: string
+                }
               | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
               | null
           }>
@@ -3426,7 +3430,7 @@ export const ButtonFragmentFragmentDoc = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: { kind: 'Name', value: 'BlogRecord' },
+                    name: { kind: 'Name', value: 'HomePageRecord' },
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -3563,7 +3567,7 @@ export const NavigationBlockFragmentFragmentDoc = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: { kind: 'Name', value: 'BlogRecord' },
+                    name: { kind: 'Name', value: 'HomePageRecord' },
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -4352,7 +4356,7 @@ export const HomePageQueryDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'blog' },
+            name: { kind: 'Name', value: 'homePage' },
             arguments: [
               {
                 kind: 'Argument',
@@ -4710,7 +4714,7 @@ export const SiteQueryDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: { kind: 'Name', value: 'BlogRecord' },
+                    name: { kind: 'Name', value: 'HomePageRecord' },
                   },
                   selectionSet: {
                     kind: 'SelectionSet',

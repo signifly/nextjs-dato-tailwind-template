@@ -5,7 +5,7 @@ import { PostHeader } from '@/components/PostHeader'
 import { SectionSeparator } from '@/components/SectionSeparator'
 
 // @ts-ignore
-export function PostPage({ data }) {
+export function HomePage({ data }) {
   const { post, morePosts } = data
 
   return (
