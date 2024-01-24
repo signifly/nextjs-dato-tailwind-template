@@ -35,6 +35,8 @@ const findUrlForItem = ({
 }) => {
   switch (itemType.attributes.api_key) {
     // @todo: add your own dynamic routes here
+    case 'homePage':
+      return `/`
     case 'post':
       return `/posts/${item.attributes.slug}`
     default:
