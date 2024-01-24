@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
   const previewLinks = [
     {
       label: 'Published version',
-      url: `${baseUrl}${url}`,
+      url: `${baseUrl}/api/exit-draft?redirect=${url}`,
     },
     {
       label: 'Draft version',
