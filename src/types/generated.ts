@@ -3016,6 +3016,65 @@ export type BannerBlockFragmentFragment = {
   text: string
 }
 
+export type NavigationBlockFragmentFragment = {
+  __typename?: 'NavigationBlockRecord'
+  id: string
+  _modelApiKey: string
+  languageToggleLabel?: string | null
+  siteLogo: { __typename?: 'FileField'; url: string; alt?: string | null }
+  menu: {
+    __typename?: 'MenuRecord'
+    id: string
+    _modelApiKey: string
+    items: Array<{
+      __typename?: 'ButtonRecord'
+      id: string
+      _modelApiKey: string
+      label: string
+      variant: string
+      size: string
+      useExternalLink?: boolean | null
+      externalLink?: string | null
+      linkTo?:
+        | { __typename?: 'AuthorRecord' }
+        | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+        | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
+        | null
+    }>
+  }
+  ctaButton: Array<{
+    __typename?: 'ButtonRecord'
+    id: string
+    _modelApiKey: string
+    label: string
+    variant: string
+    size: string
+    useExternalLink?: boolean | null
+    externalLink?: string | null
+    linkTo?:
+      | { __typename?: 'AuthorRecord' }
+      | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+      | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
+      | null
+  }>
+}
+
+export type ButtonFragmentFragment = {
+  __typename?: 'ButtonRecord'
+  id: string
+  _modelApiKey: string
+  label: string
+  variant: string
+  size: string
+  useExternalLink?: boolean | null
+  externalLink?: string | null
+  linkTo?:
+    | { __typename?: 'AuthorRecord' }
+    | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+    | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
+    | null
+}
+
 export type MetaTagsFragmentFragment = {
   __typename?: 'Tag'
   attributes?: Record<string, string> | null
@@ -3037,11 +3096,144 @@ export type ResponsiveImageFragmentFragment = {
   base64?: string | null
 }
 
-export type PageContentQueryQueryVariables = Exact<{
+export type PostBySlugQueryQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']['input']>
+}>
+
+export type PostBySlugQueryQuery = {
+  __typename?: 'Query'
+  site: {
+    __typename?: 'Site'
+    favicon: Array<{
+      __typename?: 'Tag'
+      attributes?: Record<string, string> | null
+      content?: string | null
+      tag: string
+    }>
+  }
+  post?: {
+    __typename?: 'PostRecord'
+    title?: string | null
+    slug: string
+    date: string
+    seo: Array<{
+      __typename?: 'Tag'
+      attributes?: Record<string, string> | null
+      content?: string | null
+      tag: string
+    }>
+    content?: {
+      __typename?: 'PostModelContentField'
+      value: unknown
+      blocks: Array<{
+        __typename: 'ImageBlockRecord'
+        id: string
+        image: {
+          __typename?: 'FileField'
+          responsiveImage?: {
+            __typename?: 'ResponsiveImage'
+            srcSet: string
+            webpSrcSet: string
+            sizes: string
+            src: string
+            width: number
+            height: number
+            aspectRatio: number
+            alt?: string | null
+            title?: string | null
+            base64?: string | null
+          } | null
+        }
+      }>
+    } | null
+    ogImage: { __typename?: 'FileField'; url: string }
+    coverImage: {
+      __typename?: 'FileField'
+      responsiveImage?: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      } | null
+    }
+    author: {
+      __typename?: 'AuthorRecord'
+      name?: string | null
+      picture?: {
+        __typename?: 'FileField'
+        responsiveImage?: {
+          __typename?: 'ResponsiveImage'
+          srcSet: string
+          webpSrcSet: string
+          sizes: string
+          src: string
+          width: number
+          height: number
+          aspectRatio: number
+          alt?: string | null
+          title?: string | null
+          base64?: string | null
+        } | null
+      } | null
+    }
+  } | null
+  morePosts: Array<{
+    __typename?: 'PostRecord'
+    title?: string | null
+    slug: string
+    excerpt?: string | null
+    date: string
+    coverImage: {
+      __typename?: 'FileField'
+      responsiveImage?: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      } | null
+    }
+    author: {
+      __typename?: 'AuthorRecord'
+      name?: string | null
+      picture?: {
+        __typename?: 'FileField'
+        responsiveImage?: {
+          __typename?: 'ResponsiveImage'
+          srcSet: string
+          webpSrcSet: string
+          sizes: string
+          src: string
+          width: number
+          height: number
+          aspectRatio: number
+          alt?: string | null
+          title?: string | null
+          base64?: string | null
+        } | null
+      } | null
+    }
+  }>
+}
+
+export type HomePageQueryQueryVariables = Exact<{
   locale?: InputMaybe<SiteLocale>
 }>
 
-export type PageContentQueryQuery = {
+export type HomePageQueryQuery = {
   __typename?: 'Query'
   site: {
     __typename?: 'Site'
@@ -3132,7 +3324,60 @@ export type SiteQueryQuery = {
           _modelApiKey: string
           text: string
         }
-      | { __typename?: 'NavigationBlockRecord' }
+      | {
+          __typename?: 'NavigationBlockRecord'
+          id: string
+          _modelApiKey: string
+          languageToggleLabel?: string | null
+          siteLogo: {
+            __typename?: 'FileField'
+            url: string
+            alt?: string | null
+          }
+          menu: {
+            __typename?: 'MenuRecord'
+            id: string
+            _modelApiKey: string
+            items: Array<{
+              __typename?: 'ButtonRecord'
+              id: string
+              _modelApiKey: string
+              label: string
+              variant: string
+              size: string
+              useExternalLink?: boolean | null
+              externalLink?: string | null
+              linkTo?:
+                | { __typename?: 'AuthorRecord' }
+                | {
+                    __typename?: 'BlogRecord'
+                    id: string
+                    _modelApiKey: string
+                  }
+                | {
+                    __typename?: 'PostRecord'
+                    id: string
+                    _modelApiKey: string
+                  }
+                | null
+            }>
+          }
+          ctaButton: Array<{
+            __typename?: 'ButtonRecord'
+            id: string
+            _modelApiKey: string
+            label: string
+            variant: string
+            size: string
+            useExternalLink?: boolean | null
+            externalLink?: string | null
+            linkTo?:
+              | { __typename?: 'AuthorRecord' }
+              | { __typename?: 'BlogRecord'; id: string; _modelApiKey: string }
+              | { __typename?: 'PostRecord'; id: string; _modelApiKey: string }
+              | null
+          }>
+        }
     >
   } | null
 }
@@ -3158,6 +3403,212 @@ export const BannerBlockFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BannerBlockFragmentFragment, unknown>
+export const ButtonFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'buttonFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ButtonRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'useExternalLink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'linkTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'BlogRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'PostRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'externalLink' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ButtonFragmentFragment, unknown>
+export const NavigationBlockFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'NavigationBlockFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'NavigationBlockRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'siteLogo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'menu' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: '_modelApiKey' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'items' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'buttonFragment' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'ctaButton' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'buttonFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'languageToggleLabel' },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'buttonFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ButtonRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'useExternalLink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'linkTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'BlogRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'PostRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'externalLink' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<NavigationBlockFragmentFragment, unknown>
 export const MetaTagsFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -3207,13 +3658,665 @@ export const ResponsiveImageFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ResponsiveImageFragmentFragment, unknown>
-export const PageContentQueryDocument = {
+export const PostBySlugQueryDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'PageContentQuery' },
+      name: { kind: 'Name', value: 'PostBySlugQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'site' },
+            name: { kind: 'Name', value: '_site' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'favicon' },
+                  name: { kind: 'Name', value: 'faviconMetaTags' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'metaTagsFragment' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'post' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'filter' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'slug' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'seo' },
+                  name: { kind: 'Name', value: '_seoMetaTags' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'metaTagsFragment' },
+                      },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'content' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'value' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'blocks' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: '__typename' },
+                            },
+                            {
+                              kind: 'InlineFragment',
+                              typeCondition: {
+                                kind: 'NamedType',
+                                name: {
+                                  kind: 'Name',
+                                  value: 'ImageBlockRecord',
+                                },
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' },
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'image' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'responsiveImage',
+                                          },
+                                          arguments: [
+                                            {
+                                              kind: 'Argument',
+                                              name: {
+                                                kind: 'Name',
+                                                value: 'imgixParams',
+                                              },
+                                              value: {
+                                                kind: 'ObjectValue',
+                                                fields: [
+                                                  {
+                                                    kind: 'ObjectField',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'fm',
+                                                    },
+                                                    value: {
+                                                      kind: 'EnumValue',
+                                                      value: 'jpg',
+                                                    },
+                                                  },
+                                                  {
+                                                    kind: 'ObjectField',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'fit',
+                                                    },
+                                                    value: {
+                                                      kind: 'EnumValue',
+                                                      value: 'crop',
+                                                    },
+                                                  },
+                                                  {
+                                                    kind: 'ObjectField',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'w',
+                                                    },
+                                                    value: {
+                                                      kind: 'IntValue',
+                                                      value: '2000',
+                                                    },
+                                                  },
+                                                  {
+                                                    kind: 'ObjectField',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'h',
+                                                    },
+                                                    value: {
+                                                      kind: 'IntValue',
+                                                      value: '1000',
+                                                    },
+                                                  },
+                                                ],
+                                              },
+                                            },
+                                          ],
+                                          selectionSet: {
+                                            kind: 'SelectionSet',
+                                            selections: [
+                                              {
+                                                kind: 'FragmentSpread',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value:
+                                                    'responsiveImageFragment',
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'ogImage' },
+                  name: { kind: 'Name', value: 'coverImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'url' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'fm' },
+                                  value: { kind: 'EnumValue', value: 'jpg' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'fit' },
+                                  value: { kind: 'EnumValue', value: 'crop' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'w' },
+                                  value: { kind: 'IntValue', value: '2000' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'h' },
+                                  value: { kind: 'IntValue', value: '1000' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'coverImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'fm' },
+                                  value: { kind: 'EnumValue', value: 'jpg' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'fit' },
+                                  value: { kind: 'EnumValue', value: 'crop' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'w' },
+                                  value: { kind: 'IntValue', value: '2000' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'h' },
+                                  value: { kind: 'IntValue', value: '1000' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'author' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'picture' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'responsiveImage' },
+                              arguments: [
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'imgixParams' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'fm' },
+                                        value: {
+                                          kind: 'EnumValue',
+                                          value: 'jpg',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'fit' },
+                                        value: {
+                                          kind: 'EnumValue',
+                                          value: 'crop',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'w' },
+                                        value: {
+                                          kind: 'IntValue',
+                                          value: '100',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'h' },
+                                        value: {
+                                          kind: 'IntValue',
+                                          value: '100',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'sat' },
+                                        value: {
+                                          kind: 'IntValue',
+                                          value: '-100',
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: {
+                                      kind: 'Name',
+                                      value: 'responsiveImageFragment',
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'morePosts' },
+            name: { kind: 'Name', value: 'allPosts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'date_DESC' },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'IntValue', value: '2' },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'filter' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'neq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'slug' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'excerpt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'coverImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'fm' },
+                                  value: { kind: 'EnumValue', value: 'jpg' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'fit' },
+                                  value: { kind: 'EnumValue', value: 'crop' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'w' },
+                                  value: { kind: 'IntValue', value: '2000' },
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'h' },
+                                  value: { kind: 'IntValue', value: '1000' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'author' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'picture' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'responsiveImage' },
+                              arguments: [
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'imgixParams' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'fm' },
+                                        value: {
+                                          kind: 'EnumValue',
+                                          value: 'jpg',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'fit' },
+                                        value: {
+                                          kind: 'EnumValue',
+                                          value: 'crop',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'w' },
+                                        value: {
+                                          kind: 'IntValue',
+                                          value: '100',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'h' },
+                                        value: {
+                                          kind: 'IntValue',
+                                          value: '100',
+                                        },
+                                      },
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'sat' },
+                                        value: {
+                                          kind: 'IntValue',
+                                          value: '-100',
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: {
+                                      kind: 'Name',
+                                      value: 'responsiveImageFragment',
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'metaTagsFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Tag' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'attributes' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'tag' } },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'responsiveImageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ResponsiveImage' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'srcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'webpSrcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'sizes' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'src' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'aspectRatio' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'base64' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  PostBySlugQueryQuery,
+  PostBySlugQueryQueryVariables
+>
+export const HomePageQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'HomePageQuery' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -3498,10 +4601,7 @@ export const PageContentQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<
-  PageContentQueryQuery,
-  PageContentQueryQueryVariables
->
+} as unknown as DocumentNode<HomePageQueryQuery, HomePageQueryQueryVariables>
 export const SiteQueryDocument = {
   kind: 'Document',
   definitions: [
@@ -3576,12 +4676,82 @@ export const SiteQueryDocument = {
                         kind: 'FragmentSpread',
                         name: { kind: 'Name', value: 'BannerBlockFragment' },
                       },
+                      {
+                        kind: 'FragmentSpread',
+                        name: {
+                          kind: 'Name',
+                          value: 'NavigationBlockFragment',
+                        },
+                      },
                     ],
                   },
                 },
               ],
             },
           },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'buttonFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ButtonRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'useExternalLink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'linkTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'BlogRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'PostRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'externalLink' } },
         ],
       },
     },
@@ -3614,6 +4784,76 @@ export const SiteQueryDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
           { kind: 'Field', name: { kind: 'Name', value: 'text' } },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'NavigationBlockFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'NavigationBlockRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'siteLogo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'menu' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: '_modelApiKey' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'items' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'buttonFragment' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'ctaButton' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'buttonFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'languageToggleLabel' },
+          },
         ],
       },
     },

@@ -31,13 +31,20 @@ const fetchDatoContent = async (
   }
 
   const response = await fetch(URL, options)
-
   const responseBody = await response.json()
 
+  // @todo: better error handling
   if (!response.ok) {
     throw new Error(
       `${response.status} ${response.statusText}: ${JSON.stringify(
         responseBody,
+      )}`,
+    )
+  }
+  if (responseBody.errors) {
+    throw new Error(
+      `${responseBody.errors.map((e: any) => e.message)}: ${JSON.stringify(
+        responseBody.errors.map((e: any) => e.meta),
       )}`,
     )
   }

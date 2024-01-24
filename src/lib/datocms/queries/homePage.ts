@@ -7,7 +7,7 @@ export const HOME_PAGE_QUERY = gql`
   ${metaTagsFragment}
   ${responsiveImageFragment}
 
-  query PageContentQuery($locale: SiteLocale) {
+  query HomePageQuery($locale: SiteLocale) {
     site: _site {
       favicon: faviconMetaTags {
         ...metaTagsFragment
