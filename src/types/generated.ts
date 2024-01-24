@@ -3029,7 +3029,6 @@ export type NavigationBlockFragmentFragment = {
     items: Array<{
       __typename?: 'ButtonRecord'
       id: string
-      _modelApiKey: string
       label: string
       variant: string
       size: string
@@ -3045,7 +3044,6 @@ export type NavigationBlockFragmentFragment = {
   ctaButton: Array<{
     __typename?: 'ButtonRecord'
     id: string
-    _modelApiKey: string
     label: string
     variant: string
     size: string
@@ -3062,7 +3060,6 @@ export type NavigationBlockFragmentFragment = {
 export type ButtonFragmentFragment = {
   __typename?: 'ButtonRecord'
   id: string
-  _modelApiKey: string
   label: string
   variant: string
   size: string
@@ -3341,7 +3338,6 @@ export type SiteQueryQuery = {
             items: Array<{
               __typename?: 'ButtonRecord'
               id: string
-              _modelApiKey: string
               label: string
               variant: string
               size: string
@@ -3365,7 +3361,6 @@ export type SiteQueryQuery = {
           ctaButton: Array<{
             __typename?: 'ButtonRecord'
             id: string
-            _modelApiKey: string
             label: string
             variant: string
             size: string
@@ -3417,7 +3412,6 @@ export const ButtonFragmentFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
           { kind: 'Field', name: { kind: 'Name', value: 'label' } },
           { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
           { kind: 'Field', name: { kind: 'Name', value: 'size' } },
@@ -3555,7 +3549,6 @@ export const NavigationBlockFragmentFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
           { kind: 'Field', name: { kind: 'Name', value: 'label' } },
           { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
           { kind: 'Field', name: { kind: 'Name', value: 'size' } },
@@ -4703,7 +4696,6 @@ export const SiteQueryDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
           { kind: 'Field', name: { kind: 'Name', value: 'label' } },
           { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
           { kind: 'Field', name: { kind: 'Name', value: 'size' } },

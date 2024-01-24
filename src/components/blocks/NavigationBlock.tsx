@@ -4,7 +4,6 @@ import { NavigationBlockRecord } from '@/types/generated'
 import { Container } from '../Container'
 import { SiteLogo } from '../SiteLogo'
 import { DesktopMenu } from '../DesktopMenu'
-import { SmartButton } from '../SmartButton'
 import MobileMenu from '../MobileMenu'
 
 export const NAVGATION_BLOCK_FRAGMENT = gql`

@@ -3,7 +3,6 @@ import { gql } from 'graphql-request'
 export const buttonFragment = gql`
   fragment buttonFragment on ButtonRecord {
     id
-    _modelApiKey
     label
     variant
     size
