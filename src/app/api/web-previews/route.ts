@@ -39,6 +39,8 @@ const findUrlForItem = ({
       return `/`
     case 'post':
       return `/posts/${item.attributes.slug}`
+    case 'product':
+      return `/products/${item.attributes.slug}`
     default:
       return null
   }
