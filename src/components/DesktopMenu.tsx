@@ -7,6 +7,7 @@ export const DesktopMenu = (props: NavigationBlockRecord) => {
   const {
     menu: { items },
     ctaButton,
+    languageToggleLabel,
   } = props
 
   return (
@@ -16,7 +17,9 @@ export const DesktopMenu = (props: NavigationBlockRecord) => {
           return <SmartButton key={button.id} {...button} />
         })}
       </ul>
-      <LanguageSwitcher />
+      <LanguageSwitcher
+        languageToggleLabel={languageToggleLabel || 'Language toggler'}
+      />
       <SmartButton {...ctaButton[0]} />
     </div>
   )

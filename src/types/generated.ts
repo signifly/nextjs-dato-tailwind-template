@@ -2289,7 +2289,7 @@ export type NavigationBlockRecord = RecordInterface & {
   _updatedAt: Scalars['DateTime']['output']
   ctaButton: Array<ButtonRecord>
   id: Scalars['ItemId']['output']
-  languageToggleLabel?: Maybe<Scalars['String']['output']>
+  languageToggleLabel: Scalars['String']['output']
   menu: MenuRecord
   siteLogo: FileField
 }
@@ -3179,7 +3179,7 @@ export type NavigationBlockFragmentFragment = {
   __typename?: 'NavigationBlockRecord'
   id: string
   _modelApiKey: string
-  languageToggleLabel?: string | null
+  languageToggleLabel: string
   siteLogo: { __typename?: 'FileField'; url: string; alt?: string | null }
   menu: {
     __typename?: 'MenuRecord'
@@ -3521,7 +3521,7 @@ export type SiteQueryQuery = {
           __typename?: 'NavigationBlockRecord'
           id: string
           _modelApiKey: string
-          languageToggleLabel?: string | null
+          languageToggleLabel: string
           siteLogo: {
             __typename?: 'FileField'
             url: string
