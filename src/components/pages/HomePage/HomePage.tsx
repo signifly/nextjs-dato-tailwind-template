@@ -1,26 +1,26 @@
-import { Header } from '@/components/Header'
+import { HeroPost } from '@/components/HeroPost'
+import { Intro } from '@/components/Intro'
 import { MoreStories } from '@/components/MoreStories'
-import { PostBody } from '@/components/PostBody'
-import { PostHeader } from '@/components/PostHeader'
-import { SectionSeparator } from '@/components/SectionSeparator'
 
-// @ts-ignore
-export function HomePage({ data }) {
-  const { post, morePosts } = data
+export function HomePage({ data }: any) {
+  const { allPosts } = data
+
+  const heroPost = allPosts[0]
+  const morePosts = allPosts.slice(1)
 
   return (
     <>
-      <Header />
-      <article>
-        <PostHeader
-          title={post.title}
-          coverImage={post.coverImage}
-          date={post.date}
-          author={post.author}
+      <Intro />
+      {heroPost && (
+        <HeroPost
+          title={heroPost.title}
+          coverImage={heroPost.coverImage}
+          date={heroPost.date}
+          author={heroPost.author}
+          slug={heroPost.slug}
+          excerpt={heroPost.excerpt}
         />
-        <PostBody content={post.content} />
-      </article>
-      <SectionSeparator />
+      )}
       {morePosts.length > 0 && <MoreStories posts={morePosts} />}
     </>
   )

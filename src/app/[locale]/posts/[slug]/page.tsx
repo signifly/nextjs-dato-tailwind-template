@@ -4,7 +4,7 @@ import { toNextMetadata } from 'react-datocms'
 import { performRequest } from '@/lib/datocms'
 import { POST_BY_SLUG_QUERY } from '@/lib/datocms/queries/blogPost'
 
-import { DraftHomePage, HomePage } from '@/components/pages/HomePage'
+import { DraftPostPage, PostPage } from '@/components/pages/PostPage'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Locale } from '@/i18n'
 
@@ -47,7 +47,7 @@ export default async function Page({ params }: PageProps) {
 
   if (isEnabled) {
     return (
-      <DraftHomePage
+      <DraftPostPage
         subscription={{
           ...pageRequest,
           initialData: data,
@@ -58,5 +58,5 @@ export default async function Page({ params }: PageProps) {
     )
   }
 
-  return <HomePage data={data} />
+  return <PostPage data={data} />
 }

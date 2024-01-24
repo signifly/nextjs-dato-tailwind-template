@@ -1,8 +1,7 @@
 import { draftMode } from 'next/headers'
 import { toNextMetadata } from 'react-datocms'
 import { performRequest } from '@/lib/datocms/'
-import { DraftPostIndex } from '@/components/DraftPostIndex'
-import { PostIndex } from '@/components/PostIndex'
+import { HomePage, DraftHomePage } from '@/components/pages/HomePage'
 import { HOME_PAGE_QUERY } from '@/lib/datocms/queries/homePage'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Locale } from '@/i18n'
@@ -39,7 +38,7 @@ export default async function Page({ params }: HomePageProps) {
 
   if (isEnabled) {
     return (
-      <DraftPostIndex
+      <DraftHomePage
         subscription={{
           ...pageRequest,
           initialData: data,
@@ -50,5 +49,5 @@ export default async function Page({ params }: HomePageProps) {
     )
   }
 
-  return <PostIndex data={data} />
+  return <HomePage data={data} />
 }
