@@ -1,12 +1,11 @@
 import { gql } from 'graphql-request'
 
 import { metaTagsFragment } from '@/lib/datocms/fragments/metaTagsFragment'
+import { buttonFragment } from '../fragments/buttonFragment'
 import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
+import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection'
 
 export const HOME_PAGE_QUERY = gql`
-  ${metaTagsFragment}
-  ${responsiveImageFragment}
-
   query HomePageQuery($locale: SiteLocale) {
     site: _site {
       favicon: faviconMetaTags {
@@ -18,6 +17,9 @@ export const HOME_PAGE_QUERY = gql`
         ...metaTagsFragment
       }
       title
+      sections {
+        ...HeroSectionFragment
+      }
     }
     allPosts(orderBy: date_DESC, first: 20) {
       title
@@ -41,4 +43,10 @@ export const HOME_PAGE_QUERY = gql`
       }
     }
   }
+
+  ${HERO_SECTION_FRAGMENT}
+
+  ${metaTagsFragment}
+  ${responsiveImageFragment}
+  ${buttonFragment}
 `
