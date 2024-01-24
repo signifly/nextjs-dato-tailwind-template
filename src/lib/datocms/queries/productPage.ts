@@ -6,41 +6,27 @@ import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImage
 import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection'
 import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection'
 
-export const HOME_PAGE_QUERY = gql`
-  query HomePageQuery($locale: SiteLocale) {
+export const PRODUCT_BY_SLUG_QUERY = gql`
+  query ProductBySlugQuery($locale: SiteLocale, $slug: String) {
     site: _site {
       favicon: faviconMetaTags {
         ...metaTagsFragment
       }
     }
-    page: homePage(locale: $locale) {
-      seo: _seoMetaTags {
-        ...metaTagsFragment
-      }
-      title
-      sections {
-        ...HeroSectionFragment
-        ...PageHeaderSectionFragment
-      }
-    }
-    allPosts(orderBy: date_DESC, first: 20) {
-      title
+    page: product(locale: $locale, filter: { slug: { eq: $slug } }) {
       slug
-      excerpt
-      date
-      coverImage {
-        responsiveImage(imgixParams: { fm: jpg, fit: crop, w: 2000, h: 1000 }) {
+      title
+      subTitle
+      image {
+        responsiveImage(imgixParams: { auto: format }) {
           ...responsiveImageFragment
         }
       }
-      author {
-        name
-        picture {
-          responsiveImage(
-            imgixParams: { fm: jpg, fit: crop, w: 100, h: 100, sat: -100 }
-          ) {
-            ...responsiveImageFragment
-          }
+      template: pageTemplate {
+        title
+        sections {
+          ...HeroSectionFragment
+          ...PageHeaderSectionFragment
         }
       }
     }
@@ -49,7 +35,7 @@ export const HOME_PAGE_QUERY = gql`
   ${HERO_SECTION_FRAGMENT}
   ${PAGE_HEADER_SECTION_FRAGMENT}
 
+  ${buttonFragment}
   ${metaTagsFragment}
   ${responsiveImageFragment}
-  ${buttonFragment}
 `

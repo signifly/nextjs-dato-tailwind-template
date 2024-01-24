@@ -2,9 +2,9 @@ import { draftMode } from 'next/headers'
 import { toNextMetadata } from 'react-datocms'
 
 import { performRequest } from '@/lib/datocms'
-import { POST_BY_SLUG_QUERY } from '@/lib/datocms/queries/blogPost'
+import { PRODUCT_BY_SLUG_QUERY } from '@/lib/datocms/queries/productPage'
 
-import { DraftPostPage, PostPage } from '@/components/pages/PostPage'
+import { ProductPage, DraftProductPage } from '@/components/pages/ProductPage'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Locale } from '@/i18n'
 
@@ -20,16 +20,16 @@ function getPageRequest(slug: string) {
   const { isEnabled } = draftMode()
 
   return {
-    query: POST_BY_SLUG_QUERY,
+    query: PRODUCT_BY_SLUG_QUERY,
     includeDrafts: isEnabled,
     variables: { slug },
   }
 }
 
 export async function generateMetadata({ params }: any) {
-  const { site, post } = await performRequest(getPageRequest(params.slug))
+  const { site, page } = await performRequest(getPageRequest(params.slug))
 
-  return toNextMetadata([...site.favicon, ...post.seo])
+  return toNextMetadata([...site.favicon])
 }
 
 type PageProps = {
@@ -40,7 +40,7 @@ type PageProps = {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { locale, slug } = params
+  const { slug, locale } = params
   unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
 
@@ -49,7 +49,7 @@ export default async function Page({ params }: PageProps) {
 
   if (isEnabled) {
     return (
-      <DraftPostPage
+      <DraftProductPage
         subscription={{
           ...pageRequest,
           initialData: data,
@@ -60,5 +60,5 @@ export default async function Page({ params }: PageProps) {
     )
   }
 
-  return <PostPage data={data} />
+  return <ProductPage data={data} />
 }

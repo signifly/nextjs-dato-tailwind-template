@@ -19,7 +19,7 @@ export const SITE_QUERY = gql`
         ...metaTagsFragment
       }
     }
-    header {
+    header(locale: $locale) {
       name
       blocks {
         ...BannerBlockFragment

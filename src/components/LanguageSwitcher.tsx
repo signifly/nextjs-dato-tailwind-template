@@ -23,7 +23,7 @@ export function LanguageSwitcher({
 
   return (
     <div aria-label={languageToggleLabel} className="text-sm">
-      <div className="hidden lg:block">
+      <div className="hidden md:block">
         <Popover>
           <PopoverTrigger className="group flex items-center gap-x-1 uppercase">
             {currentLocale}
@@ -48,7 +48,7 @@ export function LanguageSwitcher({
       </div>
 
       {/* Mobile version: */}
-      <div className="flex gap-x-8 py-5 lg:hidden">
+      <div className="flex gap-x-8 py-5 md:hidden">
         {locales.map((l) => {
           return (
             <Link

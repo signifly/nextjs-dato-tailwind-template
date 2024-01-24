@@ -31,7 +31,12 @@ export const SmartButton = (
 
   if (!useExternalLink && linkTo) {
     const { _modelApiKey } = linkTo
-    const url = _modelApiKey === 'blog' ? '/' : '#'
+    let url = '/'
+    // @ts-ignore
+    _modelApiKey === 'custom_page' && (url = `/${linkTo.slug}`)
+    // @ts-ignore
+    _modelApiKey === 'product' && (url = `/products/${linkTo.slug}`)
+
     return (
       <Button
         variant={variant as keyof typeof buttonVariants}

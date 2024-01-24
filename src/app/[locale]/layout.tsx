@@ -12,6 +12,7 @@ import { ComponentParser } from '@/lib/datocms/ComponentParser'
 import { unstable_setRequestLocale } from 'next-intl/server'
 
 const inter = Inter({ subsets: ['latin'] })
+export const revalidate = 10
 
 function getLayoutRequest(locale: Locale) {
   const { isEnabled } = draftMode()
@@ -47,6 +48,7 @@ export default async function LocaleLayout({
   const { locale } = params
   unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
+  console.log('LocaleLayout', { locale, isEnabled })
 
   const layoutRequest = getLayoutRequest(locale)
   const data = await performRequest(layoutRequest)

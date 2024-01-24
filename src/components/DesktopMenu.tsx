@@ -12,7 +12,7 @@ export const DesktopMenu = (props: NavigationBlockRecord) => {
 
   return (
     <div className="hidden flex-nowrap items-center justify-between gap-x-6 md:flex">
-      <ul className="hidden lg:block">
+      <ul>
         {items.map((button) => {
           return <SmartButton key={button.id} {...button} />
         })}

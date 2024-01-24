@@ -12,8 +12,14 @@ export const buttonFragment = gql`
         id
         _modelApiKey
       }
-      ... on PostRecord {
+      ... on CustomPageRecord {
         id
+        slug
+        _modelApiKey
+      }
+      ... on ProductRecord {
+        id
+        slug
         _modelApiKey
       }
     }

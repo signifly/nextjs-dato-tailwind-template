@@ -6,14 +6,14 @@ import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImage
 import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection'
 import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection'
 
-export const HOME_PAGE_QUERY = gql`
-  query HomePageQuery($locale: SiteLocale) {
+export const PAGE_BY_SLUG_QUERY = gql`
+  query PageBySlugQuery($locale: SiteLocale) {
     site: _site {
       favicon: faviconMetaTags {
         ...metaTagsFragment
       }
     }
-    page: homePage(locale: $locale) {
+    page: customPage(locale: $locale) {
       seo: _seoMetaTags {
         ...metaTagsFragment
       }
@@ -21,27 +21,6 @@ export const HOME_PAGE_QUERY = gql`
       sections {
         ...HeroSectionFragment
         ...PageHeaderSectionFragment
-      }
-    }
-    allPosts(orderBy: date_DESC, first: 20) {
-      title
-      slug
-      excerpt
-      date
-      coverImage {
-        responsiveImage(imgixParams: { fm: jpg, fit: crop, w: 2000, h: 1000 }) {
-          ...responsiveImageFragment
-        }
-      }
-      author {
-        name
-        picture {
-          responsiveImage(
-            imgixParams: { fm: jpg, fit: crop, w: 100, h: 100, sat: -100 }
-          ) {
-            ...responsiveImageFragment
-          }
-        }
       }
     }
   }

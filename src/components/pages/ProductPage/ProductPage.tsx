@@ -1,9 +1,10 @@
 // import { HeroPost } from '@/components/HeroPost'
 // import { Intro } from '@/components/Intro'
 // import { MoreStories } from '@/components/MoreStories'
+import { PageHeaderSection } from '@/components/blocks/PageHeaderSection'
 import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
-export function HomePage({ data }: any) {
+export function ProductPage({ data }: any) {
   // const { allPosts } = data
 
   // const heroPost = allPosts[0]
@@ -11,8 +12,11 @@ export function HomePage({ data }: any) {
 
   return (
     <>
-      {data?.page?.sections?.map((s: any) => (
-        <ComponentParser key={s.id} data={s} />
+      {data?.page?.template?.sections?.map((s: any) => (
+        <ComponentParser
+          key={s.id}
+          data={{ ...data.page, _modelApiKey: s._modelApiKey }}
+        />
       ))}
       {/* <Intro /> */}
       {/* {heroPost && ( */}

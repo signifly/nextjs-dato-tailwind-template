@@ -3,7 +3,7 @@
 // import { MoreStories } from '@/components/MoreStories'
 import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
-export function HomePage({ data }: any) {
+export function CustomPage({ data }: any) {
   // const { allPosts } = data
 
   // const heroPost = allPosts[0]
