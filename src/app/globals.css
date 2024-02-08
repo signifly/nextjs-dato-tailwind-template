@@ -1,9 +1,4 @@
 @tailwind base;
-
-h1 {
-  @apply text-5xl font-bold tracking-tight lg:text-7xl;
-}
-
 @tailwind components;
 @tailwind utilities;
 

@@ -1,7 +1,8 @@
 // import { HeroPost } from '@/components/HeroPost'
 // import { Intro } from '@/components/Intro'
 // import { MoreStories } from '@/components/MoreStories'
-import { ComponentParser } from '@/lib/datocms/ComponentParser'
+// import { ComponentParser } from '@/lib/datocms/ComponentParser'
+import { NewHeroSection } from '@/components/blocks/NewHeroSection'
 
 export function HomePage({ data }: any) {
   // const { allPosts } = data
@@ -11,9 +12,10 @@ export function HomePage({ data }: any) {
 
   return (
     <>
-      {data?.page?.sections?.map((s: any) => (
-        <ComponentParser key={s.id} data={s} />
-      ))}
+      {/* {data?.page?.sections?.map((s: any) => ( */}
+      {/*   <ComponentParser key={s.id} data={s} /> */}
+      {/* ))} */}
+      <NewHeroSection />
       {/* <Intro /> */}
       {/* {heroPost && ( */}
       {/*   <HeroPost */}

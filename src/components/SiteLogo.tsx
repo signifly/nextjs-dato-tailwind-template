@@ -8,7 +8,7 @@ export const SiteLogo = (props: FileField) => {
   return (
     <Link
       href="/"
-      className="relative inline-flex h-12 w-12 shrink-0 lg:h-16 lg:w-16"
+      className="relative inline-flex h-12 w-12 shrink-0 lg:h-14 lg:w-14"
     >
       <span className="sr-only">Company Logo</span>
       <Image

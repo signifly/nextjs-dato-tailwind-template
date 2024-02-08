@@ -48,7 +48,6 @@ export default async function LocaleLayout({
   const { locale } = params
   unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
-  console.log('LocaleLayout', { locale, isEnabled })
 
   const layoutRequest = getLayoutRequest(locale)
   const data = await performRequest(layoutRequest)
@@ -70,9 +69,7 @@ export default async function LocaleLayout({
                 />
               ),
           )}
-          <main>
-            <Container>{children}</Container>
-          </main>
+          <main>{children}</main>
         </div>
         <Footer />
       </body>
