@@ -1,12 +1,12 @@
 // import { HeroPost } from '@/components/HeroPost'
 // import { Intro } from '@/components/Intro'
 // import { MoreStories } from '@/components/MoreStories'
-// import { ComponentParser } from '@/lib/datocms/ComponentParser'
+import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
 import { FaqBlock } from '@/components/blocks/FaqBlock'
 import { FeaturesWithImageBlock } from '@/components/blocks/FeaturesWithImageBlock'
 import { LogoCloudBlock } from '@/components/blocks/LogoCloudBlock'
-import { NewHeroBlock } from '@/components/blocks/NewHeroBlock'
+import { HeroSection } from '@/components/blocks/HeroSection'
 import { TestimonialsBlock } from '@/components/blocks/TestimonialsBlock'
 import { CtaBlock } from '@/components/blocks/CtaBlock'
 
@@ -18,10 +18,9 @@ export function HomePage({ data }: any) {
 
   return (
     <>
-      {/* {data?.page?.sections?.map((s: any) => ( */}
-      {/*   <ComponentParser key={s.id} data={s} /> */}
-      {/* ))} */}
-      <NewHeroBlock />
+      {data?.page?.sections?.map((s: any) => (
+        <ComponentParser key={s.id} data={s} />
+      ))}
       <LogoCloudBlock />
       <FeaturesWithImageBlock />
       <TestimonialsBlock />
