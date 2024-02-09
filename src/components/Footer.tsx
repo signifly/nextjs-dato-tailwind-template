@@ -10,13 +10,13 @@ export function Footer() {
           </h3>
           <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
             <a
-              href="https://www.datocms.com/docs/next-js"
+              href="https://github.com/duy-the-developer/nextjs-dato-tailwind-template/blob/production/README.md"
               className="mx-3 mb-6 border border-black bg-black px-12 py-3 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black lg:mb-0 lg:px-8"
             >
               Read Documentation
             </a>
             <a
-              href="https://github.com/datocms/nextjs-demo"
+              href="https://github.com/duy-the-developer/nextjs-dato-tailwind-template"
               className="mx-3 font-bold hover:underline"
             >
               View on GitHub

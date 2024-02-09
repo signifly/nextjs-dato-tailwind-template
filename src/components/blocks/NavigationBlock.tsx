@@ -32,7 +32,7 @@ export const NavigationBlock = (props: NavigationBlockRecord) => {
   const { siteLogo } = props
 
   return (
-    <nav className="py-4 lg:py-6">
+    <nav className="py-4">
       <Container>
         <div className="flex items-center justify-between">
           <SiteLogo {...siteLogo} />

@@ -14,7 +14,14 @@ export const DesktopMenu = (props: NavigationBlockRecord) => {
     <div className="hidden flex-nowrap items-center justify-between gap-x-6 md:flex">
       <ul>
         {items.map((button) => {
-          return <SmartButton key={button.id} {...button} />
+          console.log('button', button)
+          return (
+            <SmartButton
+              key={button.id}
+              {...button}
+              className="text-foreground"
+            />
+          )
         })}
       </ul>
       <LanguageSwitcher

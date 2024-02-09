@@ -2,7 +2,7 @@ import { Container } from '@/components/Container'
 import { TypographyH1 } from '@/components/typography'
 import { Button } from '@/components/ui/button'
 
-export function NewHeroSection() {
+export function NewHeroBlock() {
   return (
     <div className="bg-white">
       <div className="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14">
