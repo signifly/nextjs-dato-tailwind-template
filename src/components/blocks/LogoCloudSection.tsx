@@ -1,6 +1,19 @@
 import Image from 'next/image'
+import { gql } from 'graphql-request'
 
-export function LogoCloudBlock() {
+export const LOGO_CLOUD_SECTION_FRAGMENT = gql`
+  fragment LogoCloudSectionFragment on LogoCloudSectionRecord {
+    id
+    _modelApiKey
+    logos {
+      responsiveImage(imgixParams: { auto: format }) {
+        ...responsiveImageFragment
+      }
+    }
+  }
+`
+
+export function LogoCloudSection() {
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
