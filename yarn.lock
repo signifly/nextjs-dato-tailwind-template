@@ -512,21 +512,21 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@datocms/cma-client-node@*":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@datocms/cma-client-node/-/cma-client-node-3.1.1.tgz#d62d943d62ed809b016ee7ee583aac6d98183bf8"
-  integrity sha512-H92ICPUpgC/WMvsWN9eT+OBqdgKy9pBB+my+0shu1OkpCkmmSu4A5zqWDBiX+ajC8nsrSgEKAjLaqiBIw/4EYw==
+"@datocms/cma-client-node@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@datocms/cma-client-node/-/cma-client-node-3.1.2.tgz#9aa3082803b9456f1c5d7129b7c06d0bc2ec90ad"
+  integrity sha512-9kTnkuMtD2oSIoEIddRhMHlOmGuQKm3LoWiQfZnhrSDj5PaBFr0T2qzOul3XSJesQwEczTPT5sZE3GafyWIMDw==
   dependencies:
-    "@datocms/cma-client" "^3.1.1"
+    "@datocms/cma-client" "^3.1.2"
     "@datocms/rest-client-utils" "^3.0.5"
     got "^11.8.5"
     mime-types "^2.1.35"
     tmp-promise "^3.0.3"
 
-"@datocms/cma-client@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@datocms/cma-client/-/cma-client-3.1.1.tgz#4e8da17baff4de87c23295ad0864234e6f1368b0"
-  integrity sha512-bkig27bwMzmalq7u8CP6uUnZI94l6qLGsfRmzG2jF86GE2qe8SgqJm8jtJC9GqHwiVnt7MpHrxsnH504QtDdFg==
+"@datocms/cma-client@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@datocms/cma-client/-/cma-client-3.1.2.tgz#73228aea1ab87bd2a12141a933f65a6b00d7ef3f"
+  integrity sha512-NJ8lOHNM2H+aP3eRHqfP0b1n4WWuOJnMCgMKvLiFHfXRVooLutjADg4XX1ataFGg+n/MCjxSqKiJ8n7doGGsyA==
   dependencies:
     "@datocms/rest-client-utils" "^3.0.5"
     uuid "^9.0.1"

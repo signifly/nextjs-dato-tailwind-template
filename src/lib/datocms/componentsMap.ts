@@ -1,4 +1,3 @@
-import { TestBlock2 } from '@/components/blocks/TestBlock2/TestBlock2'
 import { ReactNode } from 'react'
 import { BannerBlock } from '@/components/blocks/BannerBlock'
 import { NavigationBlock } from '@/components/blocks/NavigationBlock'
@@ -14,5 +13,4 @@ export const componentsMap = {
   navigation_block: NavigationBlock,
   hero_section: HeroSection,
   page_header_section: PageHeaderSection,
-  test_block2: TestBlock2,
 }
