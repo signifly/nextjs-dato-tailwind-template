@@ -16,8 +16,8 @@ dotenv.config({ path: `.env.local` })
 const { NEXT_DATOCMS_API_TOKEN } = process.env
 const BASE_DIR_PATH = './src/components/blocks'
 const GOODBYE_MESSAGE = 'Thanks for using the new-block script. Goodbye!'
-let originalInput = []
-const overwriteArr = []
+const originalInput = []
+const overwroteArr = []
 const createdArr = []
 const datoModelCreatedArr = []
 main()
@@ -27,6 +27,7 @@ main()
  ****************************************/
 
 async function main() {
+  resetInput()
   try {
     const answers = await inquirer.prompt([
       {
@@ -35,7 +36,9 @@ async function main() {
         type: 'list',
         choices: [
           'Create new block(s)',
-          'Create new DatoCMS model(s) for existing block(s)',
+          new inquirer.Separator(),
+          'Create new block model(s) in DatoCMS',
+          'Create new fields for existing block(s) in DatoCMS',
           new inquirer.Separator(),
           'Exit',
         ],
@@ -44,11 +47,15 @@ async function main() {
     ])
     switch (answers.actions) {
       case 'Create new block(s)':
-        askForBlockNamesAndInvokeCallBack(generateFiles)
+        askForBlockNamesAndInvokeCallBack(createFiles)
         break
-      case 'Create new DatoCMS model(s) for existing block(s)':
-        askForBlockNamesAndInvokeCallBack(generateDatoBlocks)
+      case 'Create new block model(s) in DatoCMS':
+        askForBlockNamesAndInvokeCallBack(createDatoBlocks)
         break
+      case 'Create new fields for existing block(s) in DatoCMS':
+        console.log('This feature is not yet implemented')
+      // askForBlockNamesAndInvokeCallBack(createDatoFields)
+      // break
       case 'Exit':
         goodBye()
         break
@@ -68,7 +75,7 @@ async function main() {
  * GENERATE LOCAL FILES
  ****************************************/
 
-async function generateFiles(namesArr) {
+async function createFiles(namesArr) {
   const copyArr = [...namesArr]
   if (copyArr.length > 0) {
     const name = sanitizeName(copyArr.shift())
@@ -115,13 +122,22 @@ async function generateFiles(namesArr) {
             },
           ])
           if (overwrite) {
-            overwriteFile(file.path, file.content, name)
+            const ok = await overwriteFile(file.path, file.content)
+            ok && overwroteArr.push(file.path)
+            if (!ok) {
+              printError(`[ ERROR ]: Failed to overwrite file ${file.path}`)
+              const tryAgain = await askTryAgain()
+              if (tryAgain) {
+                copyArr.unshift(name)
+                createFiles(copyArr)
+              }
+            }
           }
-          generateFiles(copyArr)
+          createFiles(copyArr)
         } else {
-          createdArr.push(name)
+          createdArr.push(file.path)
           updateComponentsMap(name)
-          generateFiles(copyArr)
+          createFiles(copyArr)
         }
       })
     }
@@ -136,43 +152,20 @@ async function generateFiles(namesArr) {
       },
     ])
     if (createDatoModels) {
-      generateDatoBlocks(createdArr)
+      createDatoBlocks(createdArr)
     } else {
-      printSuccess(dedent`
-				[ SUCCESS ]: All local files processed.
-					| Created ${createdArr.length} files: ${createdArr.join(', ')}
-					| Overwritten ${overwriteArr.length} files.
-					| Total proccesed ${createdArr.length + overwriteArr.length} files.
-					| Updated componentsMap.ts with newly created files
-			`)
-      printInfo(
-        `[ INFO ]: You can now create DatoCMS models manually or by running the script again and selecting "Create new DatoCMS model(s) for existing block(s)" option.`,
-      )
-      printWarn(
-        `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
-      )
-      goodBye()
+      restart()
     }
   } else {
-    printSuccess(dedent`
-			[ SUCCESS ]: All local files processed.
-				| Created ${createdArr.length} files: ${createdArr.join(', ')}
-				| Overwritten ${overwriteArr.length} files.
-				| Total proccesed ${createdArr.length + overwriteArr.length} files.
-				| Updated componentsMap.ts with newly created files
-		`)
-    printWarn(
-      `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
-    )
-    goodBye()
+    restart()
   }
 }
 
 /****************************************
- * GENERATE DATOCMS MODELS
+ * CREATE DATOCMS MODELS
  ****************************************/
 
-async function generateDatoBlocks(sanitizedNameArr) {
+async function createDatoBlocks(sanitizedNameArr) {
   if (sanitizedNameArr.length > 0) {
     const name = sanitizedNameArr.shift()
     // convert sanitizedName to human-readable block name Ex: 'my-new-block' => 'My New Block'
@@ -187,7 +180,69 @@ async function generateDatoBlocks(sanitizedNameArr) {
       logLevel: LogLevel.BASIC, // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
     })
 
-    printInfo(`[ INFO ]: Generating DatoCMS model for ${blockName}...`)
+    printInfo(
+      `[ INFO ]: Creating DatoCMS block for ${chalk.bgYellowBright.black(blockName)}...`,
+    )
+    const { name: nameInput } = await inquirer.prompt([
+      {
+        name: 'name',
+        message:
+          'Enter block name (singular, Ex: "Hero Block" insted of "Hero Blocks")',
+        type: 'input',
+        default: blockName,
+      },
+    ])
+    const options = await inquirer.prompt([
+      {
+        name: 'api_key',
+        message: 'Enter model API key',
+        type: 'input',
+        default: blockName.split(' ').join('_').toLowerCase(),
+      },
+      {
+        name: 'hint',
+        message: 'Enter block description to be shown to editors',
+        type: 'input',
+      },
+    ])
+
+    const model = await client.itemTypes.create({
+      ...options,
+      name: nameInput,
+      modular_block: true,
+    })
+    if (model) {
+      printSuccess(`[ SUCCESS ]: Created DatoCMS model for ${blockName}`)
+      console.log(model)
+      createDatoBlocks(sanitizedNameArr)
+    }
+  } else {
+    restart()
+  }
+}
+
+/****************************************
+ * CREATE DATOCMS FIELDS
+ ****************************************/
+
+async function createDatoFields(sanitizedNameArr) {
+  if (sanitizedNameArr.length > 0) {
+    const name = sanitizedNameArr.shift()
+    // convert sanitizedName to human-readable block name Ex: 'my-new-block' => 'My New Block'
+    const blockName = name
+      ? sanitizeName(name)
+          .split('-')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+      : ''
+    const client = buildClient({
+      apiToken: NEXT_DATOCMS_API_TOKEN,
+      logLevel: LogLevel.BASIC, // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
+    })
+
+    printInfo(
+      `[ INFO ]: Creating new fields for block: ${chalk.bgYellowBright.black(blockName)}...`,
+    )
     const { name: nameInput } = await inquirer.prompt([
       {
         name: 'name',
@@ -217,21 +272,14 @@ async function generateDatoBlocks(sanitizedNameArr) {
       name: nameInput,
       modular_block: true,
     })
-    console.log(model)
+    if (model) {
+      printSuccess(`[ SUCCESS ]: Created DatoCMS model for ${blockName}`)
+      console.log(model)
+    }
 
-    generateDatoBlocks(sanitizedNameArr)
+    createDatoBlocks(sanitizedNameArr)
   } else {
-    printSuccess(dedent`
-			[ SUCCESS ]: All local files processed.
-				| Created ${createdArr.length} files.
-				| Overwritten ${overwriteArr.length} files.
-				| Total proccesed ${createdArr.length + overwriteArr.length} files.
-				| Updated componentsMap.ts with newly created files
-		`)
-    printWarn(
-      `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
-    )
-    goodBye()
+    restart()
   }
 }
 
@@ -281,6 +329,44 @@ function convertToSnakeCase(sanitizedName) {
   return sanitizedName.split('-').join('_')
 }
 
+function resetInput() {
+  originalInput.length = 0
+  overwroteArr.length = 0
+  createdArr.length = 0
+  datoModelCreatedArr.length = 0
+}
+
+function restart() {
+  printSuccess(dedent`
+		[ SUCCESS ]: All local files processed
+		  Created ${createdArr.length} files:
+		  ${createdArr.map((f) => `  | ${f}`).join('\n    ')}
+		  Overwritten ${overwroteArr.length} files:
+		  ${overwroteArr.map((f) => `  | ${f}`).join('\n    ')}
+		  Total proccesed: ${createdArr.length + overwroteArr.length} files
+		[ SUCCESS ]: Updated componentsMap.ts with newly created files
+	`)
+  printWarn(
+    `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
+  )
+  printInfo(
+    `[ INFO ]: You can now create DatoCMS models manually or by selecting another option below`,
+  )
+  main()
+}
+
+function askTryAgain() {
+  const { tryAgain } = inquirer.prompt([
+    {
+      name: 'tryAgain',
+      message: `Would you like to try again?`,
+      type: 'confirm',
+      default: true,
+    },
+  ])
+  return tryAgain
+}
+
 async function askForBlockNamesAndInvokeCallBack(callBack) {
   const answers = await inquirer.prompt([
     {
@@ -296,18 +382,20 @@ async function askForBlockNamesAndInvokeCallBack(callBack) {
     askForBlockNamesAndInvokeCallBack(callBack)
   } else {
     const namesArr = answers.name.split(',')
-    originalInput = namesArr
+    originalInput.push([...namesArr])
     callBack(namesArr)
   }
 }
 
-function overwriteFile(path, content, sanitizedName) {
-  writeFile(path, content, (err) => {
-    if (err) {
-      throw err
-    } else {
-      overwriteArr.push(sanitizedName)
-    }
+function overwriteFile(path, content) {
+  return new Promise((resolve, reject) => {
+    writeFile(path, content, (err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(true)
+      }
+    })
   })
 }
 
