@@ -400,6 +400,9 @@ function printOperationSummary() {
 			[ SUCCESS ]: Created ${datoModelCreatedArr.length} DatoCMS models
 			${datoModelCreatedArr.map((f) => `  | ${f}`).join('\n   ')}
 		`)
+    printWarn(
+      `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
+    )
   }
   if (datoModelFailedArr.length > 0) {
     printError(dedent`

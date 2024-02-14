@@ -6,6 +6,7 @@ import {
   LockClosedIcon,
   ServerIcon,
 } from '@heroicons/react/20/solid'
+import { gql } from 'graphql-request'
 
 const features = [
   {
@@ -46,7 +47,23 @@ const features = [
   },
 ]
 
-export function FeaturesWithImageSection() {
+export const FEATURES_SECTION_FRAGMENT = gql`
+  fragment FeaturesSectionFragment on FeaturesSectionRecord {
+    id
+    _modelApiKey
+    title
+    subTitleLarge
+    subTitleSmall
+    image {
+      responsiveImage(imgixParams: { auto: format }) {
+        ...responsiveImageFragment
+      }
+    }
+    features
+  }
+`
+
+export function FeaturesSection() {
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto">
