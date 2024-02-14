@@ -59,7 +59,10 @@ export const FEATURES_SECTION_FRAGMENT = gql`
         ...responsiveImageFragment
       }
     }
-    features
+    features {
+      name
+      id
+    }
   }
 `
 
