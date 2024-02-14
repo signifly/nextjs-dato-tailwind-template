@@ -1,13 +1,13 @@
 import React from 'react'
 import { gql } from 'graphql-request'
-import { NavigationBlockRecord } from '@/types/generated'
-import { Container } from '../Container'
-import { SiteLogo } from '../SiteLogo'
-import { DesktopMenu } from '../DesktopMenu'
-import MobileMenu from '../MobileMenu'
+import { NavigationSectionRecord } from '@/types/generated'
+import { Container } from '@/components/Container'
+import { SiteLogo } from '@/components/SiteLogo'
+import { DesktopMenu } from '@/components/DesktopMenu'
+import MobileMenu from '@/components/MobileMenu'
 
-export const NAVGATION_BLOCK_FRAGMENT = gql`
-  fragment NavigationBlockFragment on NavigationBlockRecord {
+export const NAVIGATION_SECTION_FRAGMENT = gql`
+  fragment NavigationSectionFragment on NavigationSectionRecord {
     id
     _modelApiKey
     siteLogo {
@@ -28,7 +28,7 @@ export const NAVGATION_BLOCK_FRAGMENT = gql`
   }
 `
 
-export const NavigationBlock = (props: NavigationBlockRecord) => {
+export const NavigationSection = (props: NavigationSectionRecord) => {
   const { siteLogo } = props
 
   return (

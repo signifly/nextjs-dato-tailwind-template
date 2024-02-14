@@ -1,7 +1,7 @@
-import { Container } from '../Container'
-import { Button } from '../ui/button'
+import { Container } from '@/components/Container'
+import { Button } from '@/components/ui/button'
 
-export function CtaBlock() {
+export function CtaSection() {
   return (
     <div className="bg-background">
       <Container>

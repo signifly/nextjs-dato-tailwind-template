@@ -3,8 +3,8 @@ import { gql } from 'graphql-request'
 import { metaTagsFragment } from '@/lib/datocms/fragments/metaTagsFragment'
 import { buttonFragment } from '../fragments/buttonFragment'
 import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
-import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection'
-import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection'
+import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection/HeroSection'
+import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection/PageHeaderSection'
 
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query ProductBySlugQuery($locale: SiteLocale, $slug: String) {

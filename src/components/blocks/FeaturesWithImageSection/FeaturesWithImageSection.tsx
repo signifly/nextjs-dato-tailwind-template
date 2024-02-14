@@ -6,7 +6,6 @@ import {
   LockClosedIcon,
   ServerIcon,
 } from '@heroicons/react/20/solid'
-import { Container } from '@/components/Container'
 
 const features = [
   {
@@ -47,7 +46,7 @@ const features = [
   },
 ]
 
-export function FeaturesWithImageBlock() {
+export function FeaturesWithImageSection() {
   return (
     <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto">

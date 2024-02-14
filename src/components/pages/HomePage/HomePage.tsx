@@ -3,12 +3,11 @@
 // import { MoreStories } from '@/components/MoreStories'
 import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
-import { FaqBlock } from '@/components/blocks/FaqBlock'
-import { FeaturesWithImageBlock } from '@/components/blocks/FeaturesWithImageBlock'
-import { LogoCloudSection } from '@/components/blocks/LogoCloudSection'
-import { HeroSection } from '@/components/blocks/HeroSection'
-import { TestimonialsBlock } from '@/components/blocks/TestimonialsBlock'
-import { CtaBlock } from '@/components/blocks/CtaBlock'
+import { FaqSection } from '@/components/blocks/FaqSection/FaqSection'
+import { FeaturesWithImageSection } from '@/components/blocks/FeaturesWithImageSection/FeaturesWithImageSection'
+import { LogoCloudSection } from '@/components/blocks/LogoCloudSection/LogoCloudSection'
+import { TestimonialSection } from '@/components/blocks/TestimonialSection/TestimonialSection'
+import { CtaSection } from '@/components/blocks/CtaSection/CtaSection'
 
 export function HomePage({ data }: any) {
   // const { allPosts } = data
@@ -22,10 +21,10 @@ export function HomePage({ data }: any) {
         <ComponentParser key={s.id} data={s} />
       ))}
       <LogoCloudSection />
-      <FeaturesWithImageBlock />
-      <TestimonialsBlock />
-      <FaqBlock />
-      <CtaBlock />
+      <FeaturesWithImageSection />
+      <TestimonialSection />
+      <FaqSection />
+      <CtaSection />
 
       {/* <Intro /> */}
       {/* {heroPost && ( */}

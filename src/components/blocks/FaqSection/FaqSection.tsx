@@ -43,7 +43,7 @@ const faqs = [
   // More questions...
 ]
 
-export function FaqBlock() {
+export function FaqSection() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl divide-y divide-gray-900/10 px-6 py-24 sm:py-32 lg:px-8 lg:py-40">

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { Container } from '../Container'
+import { Container } from '@/components/Container'
 
 const featuredTestimonial = {
   body: 'Integer id nunc sit semper purus. Bibendum at lacus ut arcu blandit montes vitae auctor libero. Hac condimentum dignissim nibh vulputate ut nunc. Amet nibh orci mi venenatis blandit vel et proin. Non hendrerit in vel ac diam.',
@@ -66,7 +66,7 @@ const testimonials = [
   ],
 ]
 
-export function TestimonialsBlock() {
+export function TestimonialSection() {
   return (
     <div className="relative isolate bg-white pb-32 pt-24 sm:pt-32">
       <div

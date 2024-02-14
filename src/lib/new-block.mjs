@@ -169,7 +169,7 @@ async function generateFiles(namesArr) {
 }
 
 /****************************************
- * GENERATE LOCAL FILES
+ * GENERATE DATOCMS MODELS
  ****************************************/
 
 async function generateDatoBlocks(sanitizedNameArr) {
@@ -183,7 +183,7 @@ async function generateDatoBlocks(sanitizedNameArr) {
           .join(' ')
       : ''
     const client = buildClient({
-      token: NEXT_DATOCMS_API_TOKEN,
+      apiToken: NEXT_DATOCMS_API_TOKEN,
       logLevel: LogLevel.BASIC, // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
     })
 
@@ -212,6 +212,12 @@ async function generateDatoBlocks(sanitizedNameArr) {
     ])
 
     // @todo: create DatoCMS model
+    const model = await client.itemTypes.create({
+      ...options,
+      name: nameInput,
+      modular_block: true,
+    })
+    console.log(model)
 
     generateDatoBlocks(sanitizedNameArr)
   } else {
