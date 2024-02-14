@@ -42,7 +42,7 @@ export default async function Page({ params }: HomePageProps) {
         subscription={{
           ...pageRequest,
           initialData: data,
-          token: process.env.NEXT_DATOCMS_API_TOKEN,
+          token: process.env.NEXT_DATOCMS_READ_ONLY_API_TOKEN,
           environment: process.env.NEXT_DATOCMS_ENVIRONMENT || null,
         }}
       />
