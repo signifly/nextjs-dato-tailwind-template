@@ -4,11 +4,11 @@ import * as React from 'react'
 import { Button } from './ui/button'
 import { ScrollArea } from './ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
-import { NavigationBlockRecord } from '@/types/generated'
+import { NavigationSectionRecord } from '@/types/generated'
 import { SmartButton } from './SmartButton'
 import { SiteLogo } from './SiteLogo'
 
-export default function MobileMenu(props: NavigationBlockRecord) {
+export default function MobileMenu(props: NavigationSectionRecord) {
   const {
     siteLogo,
     menu: { items },

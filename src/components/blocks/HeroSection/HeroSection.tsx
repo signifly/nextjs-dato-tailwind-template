@@ -2,7 +2,7 @@ import { Container } from '@/components/Container'
 import { TypographyH1 } from '@/components/typography'
 import { SmartButton } from '@/components/SmartButton'
 import { HeroSectionRecord } from '@/types/generated'
-import { Image } from 'react-datocms'
+import { Image as DatoImage } from 'react-datocms'
 import { gql } from 'graphql-request'
 
 export const HERO_SECTION_FRAGMENT = gql`
@@ -47,7 +47,8 @@ export function HeroSection(props: HeroSectionRecord) {
               </div>
             </div>
             {image && (
-              <Image
+              //@ eslint-disable-next-line jsx-a11y/alt-text - responsiveImage has alt text built in
+              <DatoImage
                 data={image.responsiveImage}
                 className="mt-10 aspect-[6/5] w-full max-w-lg rounded-2xl object-cover sm:mt-16 lg:mt-0 lg:max-w-none xl:row-span-2 xl:row-end-2 xl:mt-36"
                 pictureClassName="object-cover"

@@ -1,7 +1,6 @@
 // import { HeroPost } from '@/components/HeroPost'
 // import { Intro } from '@/components/Intro'
 // import { MoreStories } from '@/components/MoreStories'
-import { PageHeaderSection } from '@/components/blocks/PageHeaderSection'
 import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
 export function ProductPage({ data }: any) {

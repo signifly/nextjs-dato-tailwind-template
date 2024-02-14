@@ -5,6 +5,7 @@ import { buttonFragment } from '../fragments/buttonFragment'
 import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
 import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection/HeroSection'
 import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection/PageHeaderSection'
+import { LOGO_CLOUD_SECTION_FRAGMENT } from '@/components/blocks/LogoCloudSection/LogoCloudSection'
 
 export const HOME_PAGE_QUERY = gql`
   query HomePageQuery($locale: SiteLocale) {
@@ -21,6 +22,7 @@ export const HOME_PAGE_QUERY = gql`
       sections {
         ...HeroSectionFragment
         ...PageHeaderSectionFragment
+        ...LogoCloudSectionFragment
       }
     }
     allPosts(orderBy: date_DESC, first: 20) {
@@ -48,6 +50,7 @@ export const HOME_PAGE_QUERY = gql`
 
   ${HERO_SECTION_FRAGMENT}
   ${PAGE_HEADER_SECTION_FRAGMENT}
+  ${LOGO_CLOUD_SECTION_FRAGMENT}
 
   ${metaTagsFragment}
   ${responsiveImageFragment}

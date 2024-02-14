@@ -1,9 +1,9 @@
-import { NavigationBlockRecord } from '@/types/generated'
+import { NavigationSectionRecord } from '@/types/generated'
 import React from 'react'
 import { SmartButton } from './SmartButton'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-export const DesktopMenu = (props: NavigationBlockRecord) => {
+export const DesktopMenu = (props: NavigationSectionRecord) => {
   const {
     menu: { items },
     ctaButton,
@@ -14,7 +14,6 @@ export const DesktopMenu = (props: NavigationBlockRecord) => {
     <div className="hidden flex-nowrap items-center justify-between gap-x-6 md:flex">
       <ul>
         {items.map((button) => {
-          console.log('button', button)
           return (
             <SmartButton
               key={button.id}
