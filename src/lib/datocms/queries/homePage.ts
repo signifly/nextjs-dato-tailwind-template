@@ -2,10 +2,12 @@ import { gql } from 'graphql-request'
 
 import { metaTagsFragment } from '@/lib/datocms/fragments/metaTagsFragment'
 import { buttonFragment } from '../fragments/buttonFragment'
+import { iconFragment } from '@/lib/datocms/fragments/iconFragment'
 import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
 import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection/HeroSection'
 import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection/PageHeaderSection'
 import { LOGO_CLOUD_SECTION_FRAGMENT } from '@/components/blocks/LogoCloudSection/LogoCloudSection'
+import { FEATURES_SECTION_FRAGMENT } from '@/components/blocks/FeaturesSection/FeaturesSection'
 
 export const HOME_PAGE_QUERY = gql`
   query HomePageQuery($locale: SiteLocale) {
@@ -23,6 +25,7 @@ export const HOME_PAGE_QUERY = gql`
         ...HeroSectionFragment
         ...PageHeaderSectionFragment
         ...LogoCloudSectionFragment
+        ...FeaturesSectionFragment
       }
     }
     allPosts(orderBy: date_DESC, first: 20) {
@@ -51,6 +54,7 @@ export const HOME_PAGE_QUERY = gql`
   ${HERO_SECTION_FRAGMENT}
   ${PAGE_HEADER_SECTION_FRAGMENT}
   ${LOGO_CLOUD_SECTION_FRAGMENT}
+  ${FEATURES_SECTION_FRAGMENT}
 
   ${metaTagsFragment}
   ${responsiveImageFragment}
