@@ -14,12 +14,20 @@ import chalk from 'chalk'
 dotenv.config({ path: `.env.local` })
 
 const { NEXT_DATOCMS_API_TOKEN } = process.env
+if (!NEXT_DATOCMS_API_TOKEN) {
+  printError(
+    '[ ERROR ]: NEXT_DATOCMS_API_TOKEN is required, please add it to your .env.local file and try again.',
+  )
+  process.exit(1)
+}
+
 const BASE_DIR_PATH = './src/components/blocks'
 const GOODBYE_MESSAGE = 'Thanks for using the new-block script. Goodbye!'
 const originalInput = []
 const overwroteArr = []
 const createdArr = []
 const datoModelCreatedArr = []
+const datoModelFailedArr = []
 main()
 
 /****************************************
@@ -75,12 +83,10 @@ async function main() {
  * GENERATE LOCAL FILES
  ****************************************/
 
-async function createFiles(namesArr) {
-  const copyArr = [...namesArr]
-  if (copyArr.length > 0) {
-    const name = sanitizeName(copyArr.shift())
+async function createFiles(sanitizedNameArr) {
+  if (sanitizedNameArr.length > 0) {
+    const name = sanitizedNameArr.shift()
     const PascalCaseName = convertToPascalCase(name)
-    const UpperSnakeCaseName = convertToSnakeCase(name).toUpperCase()
     const dirPath = `${BASE_DIR_PATH}/${PascalCaseName}`
     if (!existsSync(dirPath)) {
       mkdirSync(dirPath, { recursive: true })
@@ -91,23 +97,23 @@ async function createFiles(namesArr) {
         id: 'index',
         path: `${dirPath}/${PascalCaseName}.tsx`,
         content: dedent`
-				import React from 'react'
-				import { gql } from 'graphql-request'
-				import { ${PascalCaseName}Record } from '@/types/generated'
+					import React from 'react'
+					import { gql } from 'graphql-request'
+					import { ${PascalCaseName}Record } from '@/types/generated'
 
-				// @todo: complete gql query for ${PascalCaseName}
-				export const ${UpperSnakeCaseName}_FRAGMENT = gql\`
-					fragment ${PascalCaseName}Fragment on ${PascalCaseName}Record {
-						id
-						_modelApiKey
+					// @todo: complete gql query for ${PascalCaseName}
+					export const ${convertToSnakeCase(name).toUpperCase()}_FRAGMENT = gql\`
+						fragment ${PascalCaseName}Fragment on ${PascalCaseName}Record {
+							id
+							_modelApiKey
+						}
+					\`
+
+					// @todo: develop block ${PascalCaseName}
+					export const ${PascalCaseName} = (props: ${PascalCaseName}Record) => {
+						return <div className="">${PascalCaseName}</div>
 					}
-				\`
-
-				// @todo: develop block ${PascalCaseName}
-				export const ${PascalCaseName} = (props: ${PascalCaseName}Record) => {
-					return <div className={styles.${PascalCaseName}}>${PascalCaseName}</div>
-				}
-			`,
+				`,
       },
     ]
 
@@ -119,6 +125,7 @@ async function createFiles(namesArr) {
               name: 'overwrite',
               message: `File ${file.path} already exists. Overwrite?`,
               type: 'confirm',
+              default: false,
             },
           ])
           if (overwrite) {
@@ -128,16 +135,16 @@ async function createFiles(namesArr) {
               printError(`[ ERROR ]: Failed to overwrite file ${file.path}`)
               const tryAgain = await askTryAgain()
               if (tryAgain) {
-                copyArr.unshift(name)
-                createFiles(copyArr)
+                sanitizedNameArr.unshift(name)
+                createFiles(sanitizedNameArr)
               }
             }
           }
-          createFiles(copyArr)
+          createFiles(sanitizedNameArr)
         } else {
           createdArr.push(file.path)
           updateComponentsMap(name)
-          createFiles(copyArr)
+          createFiles(sanitizedNameArr)
         }
       })
     }
@@ -152,12 +159,25 @@ async function createFiles(namesArr) {
       },
     ])
     if (createDatoModels) {
-      createDatoBlocks(createdArr)
+      createDatoBlocks(
+        createdArr.map(
+          // extract block name from file path
+          (path) => sanitizeName(path.split('/').pop().split('.')[0]),
+        ),
+      )
     } else {
-      restart()
+      printSuccess(
+        `[ SUCCESS ]: Updated componentsMap.ts with newly created files`,
+      )
+      printOperationSummary()
+      printInfo(
+        `[ INFO ]: You can now create DatoCMS models manually or by selecting another option below`,
+      )
+      main()
     }
   } else {
-    restart()
+    printOperationSummary()
+    main()
   }
 }
 
@@ -168,7 +188,8 @@ async function createFiles(namesArr) {
 async function createDatoBlocks(sanitizedNameArr) {
   if (sanitizedNameArr.length > 0) {
     const name = sanitizedNameArr.shift()
-    // convert sanitizedName to human-readable block name Ex: 'my-new-block' => 'My New Block'
+    // convert sanitizedName to human-readable block name
+    // Ex: 'my-new-block' => 'My New Block'
     const blockName = name
       ? sanitizeName(name)
           .split('-')
@@ -177,7 +198,8 @@ async function createDatoBlocks(sanitizedNameArr) {
       : ''
     const client = buildClient({
       apiToken: NEXT_DATOCMS_API_TOKEN,
-      logLevel: LogLevel.BASIC, // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
+      // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
+      logLevel: LogLevel.BASIC,
     })
 
     printInfo(
@@ -206,18 +228,32 @@ async function createDatoBlocks(sanitizedNameArr) {
       },
     ])
 
-    const model = await client.itemTypes.create({
-      ...options,
-      name: nameInput,
-      modular_block: true,
-    })
-    if (model) {
-      printSuccess(`[ SUCCESS ]: Created DatoCMS model for ${blockName}`)
-      console.log(model)
+    try {
+      const model = await client.itemTypes.create({
+        ...options,
+        name: nameInput,
+        modular_block: true,
+      })
+      if (model) {
+        printSuccess(`[ SUCCESS ]: Created DatoCMS model for ${blockName}`)
+        console.log(model)
+        datoModelCreatedArr.push(blockName)
+      } else {
+        datoModelFailedArr.push(blockName)
+        printError(`[ ERROR ]: Failed to create DatoCMS model for ${blockName}`)
+      }
+    } catch (err) {
+      datoModelFailedArr.push(blockName)
+      printError(dedent`
+				[ ERROR ]: Failed to create DatoCMS model for ${blockName}
+				${err}
+			`)
+    } finally {
       createDatoBlocks(sanitizedNameArr)
     }
   } else {
-    restart()
+    printOperationSummary()
+    main()
   }
 }
 
@@ -228,7 +264,8 @@ async function createDatoBlocks(sanitizedNameArr) {
 async function createDatoFields(sanitizedNameArr) {
   if (sanitizedNameArr.length > 0) {
     const name = sanitizedNameArr.shift()
-    // convert sanitizedName to human-readable block name Ex: 'my-new-block' => 'My New Block'
+    // convert sanitizedName to human-readable block name
+    // Ex: 'my-new-block' => 'My New Block'
     const blockName = name
       ? sanitizeName(name)
           .split('-')
@@ -237,7 +274,8 @@ async function createDatoFields(sanitizedNameArr) {
       : ''
     const client = buildClient({
       apiToken: NEXT_DATOCMS_API_TOKEN,
-      logLevel: LogLevel.BASIC, // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
+      // 'NONE' | 'BASIC' | 'BODY' | 'BODY_AND_HEADERS'
+      logLevel: LogLevel.BASIC,
     })
 
     printInfo(
@@ -279,7 +317,7 @@ async function createDatoFields(sanitizedNameArr) {
 
     createDatoBlocks(sanitizedNameArr)
   } else {
-    restart()
+    printOperationSummary()
   }
 }
 
@@ -336,23 +374,40 @@ function resetInput() {
   datoModelCreatedArr.length = 0
 }
 
-function restart() {
-  printSuccess(dedent`
-		[ SUCCESS ]: All local files processed
-		  Created ${createdArr.length} files:
-		  ${createdArr.map((f) => `  | ${f}`).join('\n    ')}
-		  Overwritten ${overwroteArr.length} files:
-		  ${overwroteArr.map((f) => `  | ${f}`).join('\n    ')}
-		  Total proccesed: ${createdArr.length + overwroteArr.length} files
-		[ SUCCESS ]: Updated componentsMap.ts with newly created files
-	`)
-  printWarn(
-    `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
-  )
-  printInfo(
-    `[ INFO ]: You can now create DatoCMS models manually or by selecting another option below`,
-  )
-  main()
+function printOperationSummary() {
+  if (createdArr.length > 0) {
+    printSuccess(dedent`
+			[ SUCCESS ]: Created ${createdArr.length} files
+			${createdArr.map((f) => `  | ${f}`).join('\n   ')}
+		`)
+    printWarn(
+      `[ WARN ]: Don't forget to add the block reference in your parent model and fragment(s) to your queries!`,
+    )
+  }
+  if (overwroteArr.length > 0) {
+    printSuccess(dedent`
+			[ SUCCESS ]: Overwritten ${overwroteArr.length} files
+			${overwroteArr.map((f) => `  | ${f}`).join('\n   ')}
+		`)
+  }
+  if (createdArr.length + overwroteArr.length > 0) {
+    printInfo(
+      `[ INFO ]: Total ${createdArr.length + overwroteArr.length} files processed`,
+    )
+  }
+  if (datoModelCreatedArr.length > 0) {
+    printSuccess(dedent`
+			[ SUCCESS ]: Created ${datoModelCreatedArr.length} DatoCMS models
+			${datoModelCreatedArr.map((f) => `  | ${f}`).join('\n   ')}
+		`)
+  }
+  if (datoModelFailedArr.length > 0) {
+    printError(dedent`
+			[ ERROR ]: Failed to create ${datoModelFailedArr.length} DatoCMS models
+			${datoModelFailedArr.map((f) => `  | ${f}`).join('\n   ')}
+		`)
+  }
+  console.log('-----------------------------------')
 }
 
 function askTryAgain() {
@@ -383,7 +438,7 @@ async function askForBlockNamesAndInvokeCallBack(callBack) {
   } else {
     const namesArr = answers.name.split(',')
     originalInput.push([...namesArr])
-    callBack(namesArr)
+    callBack(namesArr.map((name) => sanitizeName(name)))
   }
 }
 
