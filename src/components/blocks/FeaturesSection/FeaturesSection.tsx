@@ -1,23 +1,7 @@
 import { FeaturesSectionRecord } from '@/types/generated'
-import {
-  ArrowPathIcon,
-  CloudArrowUpIcon,
-  Cog6ToothIcon,
-  FingerPrintIcon,
-  LockClosedIcon,
-  ServerIcon,
-} from '@heroicons/react/20/solid'
 import { gql } from 'graphql-request'
 import { Image as DatoImage } from 'react-datocms'
-
-const icons = {
-  cloud_arrow_up: CloudArrowUpIcon,
-  lock_closed: LockClosedIcon,
-  arrow_path: ArrowPathIcon,
-  finger_print: FingerPrintIcon,
-  cog_6_tooth: Cog6ToothIcon,
-  server: ServerIcon,
-}
+import { Icon } from '@/components/Icon'
 
 export const FEATURES_SECTION_FRAGMENT = gql`
   fragment FeaturesSectionFragment on FeaturesSectionRecord {
@@ -35,18 +19,15 @@ export const FEATURES_SECTION_FRAGMENT = gql`
       id
       name
       description
+      icon {
+        ...iconFragment
+      }
     }
   }
 `
 
 export function FeaturesSection(props: FeaturesSectionRecord) {
-  const {
-    title,
-    subTitleLarge,
-    subTitleSmall,
-    image,
-    // features
-  } = props
+  const { title, subTitleLarge, subTitleSmall, image, features } = props
 
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -76,22 +57,23 @@ export function FeaturesSection(props: FeaturesSectionRecord) {
           </div>
         </div>
       </div>
-      {/* <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8"> */}
-      {/*   <dl className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"> */}
-      {/*     {features.map((feature) => ( */}
-      {/*       <div key={feature.name} className="relative pl-9"> */}
-      {/*         <dt className="inline font-semibold text-gray-900"> */}
-      {/*           <feature.icon */}
-      {/*             className="absolute left-1 top-1 h-5 w-5 text-primary" */}
-      {/*             aria-hidden="true" */}
-      {/*           /> */}
-      {/*           {feature.name} */}
-      {/*         </dt>{' '} */}
-      {/*         <dd className="inline">{feature.description}</dd> */}
-      {/*       </div> */}
-      {/*     ))} */}
-      {/*   </dl> */}
-      {/* </div> */}
+      <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
+        <dl className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+          {features.map((feature) => (
+            <div key={feature.name} className="relative pl-9">
+              <dt className="inline font-semibold text-gray-900">
+                <Icon
+                  {...feature.icon}
+                  aria-hidden
+                  className="absolute left-1 top-1 h-5 w-5 text-primary"
+                />
+                {feature.name}
+              </dt>{' '}
+              <dd className="inline">{feature.description}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
   )
 }

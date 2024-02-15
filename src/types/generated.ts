@@ -3811,6 +3811,12 @@ export type FeaturesSectionFragmentFragment = {
     id: string
     name: string
     description: string
+    icon: {
+      __typename?: 'IconRecord'
+      id: string
+      _modelApiKey: string
+      name: string
+    }
   }>
 }
 
@@ -4188,6 +4194,27 @@ export const ResponsiveImageFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ResponsiveImageFragmentFragment, unknown>
+export const IconFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'iconFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'IconRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<IconFragmentFragment, unknown>
 export const FeaturesSectionFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -4256,6 +4283,19 @@ export const FeaturesSectionFragmentFragmentDoc = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'icon' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'iconFragment' },
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -4282,6 +4322,22 @@ export const FeaturesSectionFragmentFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'base64' } },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'iconFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'IconRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
         ],
       },
     },
@@ -4886,27 +4942,6 @@ export const PageHeaderSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<PageHeaderSectionFragmentFragment, unknown>
-export const IconFragmentFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'iconFragment' },
-      typeCondition: {
-        kind: 'NamedType',
-        name: { kind: 'Name', value: 'IconRecord' },
-      },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<IconFragmentFragment, unknown>
 export const MetaTagsFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [

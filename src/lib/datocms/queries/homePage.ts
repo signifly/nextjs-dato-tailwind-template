@@ -59,4 +59,5 @@ export const HOME_PAGE_QUERY = gql`
   ${metaTagsFragment}
   ${responsiveImageFragment}
   ${buttonFragment}
+  ${iconFragment}
 `
