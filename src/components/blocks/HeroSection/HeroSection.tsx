@@ -46,7 +46,7 @@ export function HeroSection(props: HeroSectionRecord) {
                   })}
               </div>
             </div>
-            {image && (
+            {image?.responsiveImage && (
               //@ eslint-disable-next-line jsx-a11y/alt-text - responsiveImage has alt text built in
               <DatoImage
                 data={image.responsiveImage}
