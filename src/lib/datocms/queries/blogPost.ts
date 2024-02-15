@@ -10,7 +10,7 @@ export const POST_BY_SLUG_QUERY = gql`
         ...metaTagsFragment
       }
     }
-    post(filter: { slug: { eq: $slug } }) {
+    post(filter: { slug: { eq: ${'$slug'} } }) {
       seo: _seoMetaTags {
         ...metaTagsFragment
       }

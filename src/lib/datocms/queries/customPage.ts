@@ -13,7 +13,7 @@ export const PAGE_BY_SLUG_QUERY = gql`
         ...metaTagsFragment
       }
     }
-    page: customPage(locale: $locale) {
+    page: customPage(locale: ${'$locale'}) {
       seo: _seoMetaTags {
         ...metaTagsFragment
       }

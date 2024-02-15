@@ -13,7 +13,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
         ...metaTagsFragment
       }
     }
-    page: product(locale: $locale, filter: { slug: { eq: $slug } }) {
+    page: product(locale: ${'$locale'}, filter: { slug: { eq: ${'$slug'} } }) {
       slug
       title
       subTitle

@@ -16,7 +16,7 @@ export const HOME_PAGE_QUERY = gql`
         ...metaTagsFragment
       }
     }
-    page: homePage(locale: $locale) {
+    page: homePage(locale: ${'$locale'}) {
       seo: _seoMetaTags {
         ...metaTagsFragment
       }
