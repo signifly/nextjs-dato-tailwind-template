@@ -4,10 +4,6 @@ import { metaTagsFragment } from '@/lib/datocms/fragments/metaTagsFragment'
 import { buttonFragment } from '../fragments/buttonFragment'
 import { responsiveImageFragment } from '@/lib/datocms/fragments/responsiveImageFragment'
 import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection/HeroSection'
-import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection/PageHeaderSection'
-import { PRODUCT_LIST_SECTION_FRAGMENT } from '@/components/blocks/ProductListSection/ProductListSection'
-import { CATEGORY_PREVIEW_SECTION_FRAGMENT } from '@/components/blocks/CategoryPreviewSection/CategoryPreviewSection'
-import { FEATURED_BLOGS_SECTION_FRAGMENT } from '@/components/blocks/FeaturedBlogsSection/FeaturedBlogsSection'
 
 export const PAGE_BY_SLUG_QUERY = gql`
   query PageBySlugQuery($locale: SiteLocale, $slug: String) {
@@ -27,19 +23,10 @@ export const PAGE_BY_SLUG_QUERY = gql`
       title
       sections {
         ...HeroSectionFragment
-        ...PageHeaderSectionFragment
-				...ProductListSectionFragment
-				...CategoryPreviewSectionFragment
-				...FeaturedBlogsSectionFragment
       }
     }
   }
-
-  ${HERO_SECTION_FRAGMENT}
-  ${PAGE_HEADER_SECTION_FRAGMENT}
-	${PRODUCT_LIST_SECTION_FRAGMENT}
-	${CATEGORY_PREVIEW_SECTION_FRAGMENT}
-	${FEATURED_BLOGS_SECTION_FRAGMENT}
+	${HERO_SECTION_FRAGMENT}
 
   ${metaTagsFragment}
   ${responsiveImageFragment}
