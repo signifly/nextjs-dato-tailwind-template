@@ -8,25 +8,25 @@ import { CustomPage, DraftCustomPage } from '@/components/pages/CustomPage'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Locale } from '@/i18n'
 
-// @todo: increase revalidate interval in production
-export const revalidate = 10
-
 export async function generateStaticParams() {
   const { allPosts } = await performRequest({ query: `{ allPosts { slug } }` })
   return allPosts.map(({ slug }: any) => slug)
 }
 
-function getPageRequest(slug: string) {
+function getPageRequest({ slug, locale }: PageProps['params']) {
+  console.log('getPageRequest', slug, locale)
   const { isEnabled } = draftMode()
   return {
     query: PAGE_BY_SLUG_QUERY,
     includeDrafts: isEnabled,
-    variables: { slug },
+    variables: { slug, locale },
+    // @todo: increase revalidate interval in production
+    revalidate: 10,
   }
 }
 
-export async function generateMetadata({ params }: any) {
-  const { site, page } = await performRequest(getPageRequest(params.slug))
+export async function generateMetadata({ params }: PageProps['params']) {
+  const { site, page } = await performRequest(getPageRequest(params))
   return toNextMetadata([...site.favicon, ...page.seo])
 }
 
@@ -38,10 +38,9 @@ type PageProps = {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { locale } = params
-  unstable_setRequestLocale(locale)
+  unstable_setRequestLocale(params.locale)
   const { isEnabled } = draftMode()
-  const pageRequest = getPageRequest(locale)
+  const pageRequest = getPageRequest(params)
   const data = await performRequest(pageRequest)
 
   if (isEnabled) {

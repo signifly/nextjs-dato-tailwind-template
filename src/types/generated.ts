@@ -188,7 +188,9 @@ export type CategoryModelFilter = {
   _status?: InputMaybe<StatusFilter>
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>
   _updatedAt?: InputMaybe<UpdatedAtFilter>
+  description?: InputMaybe<TextFilter>
   id?: InputMaybe<ItemIdFilter>
+  image?: InputMaybe<FileFilter>
   name?: InputMaybe<StringFilter>
   slug?: InputMaybe<SlugFilter>
 }
@@ -216,9 +218,9 @@ export enum CategoryModelOrderBy {
   NameDesc = 'name_DESC',
 }
 
-/** Record of type Category (category) */
-export type CategoryRecord = RecordInterface & {
-  __typename?: 'CategoryRecord'
+/** Block of type Category Preview Section (category_preview_section) */
+export type CategoryPreviewSectionRecord = RecordInterface & {
+  __typename?: 'CategoryPreviewSectionRecord'
   _createdAt: Scalars['DateTime']['output']
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>
@@ -232,14 +234,54 @@ export type CategoryRecord = RecordInterface & {
   _status: ItemStatus
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
   _updatedAt: Scalars['DateTime']['output']
+  button: ButtonRecord
+  category: CategoryRecord
   id: Scalars['ItemId']['output']
+}
+
+/** Block of type Category Preview Section (category_preview_section) */
+export type CategoryPreviewSectionRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Record of type Category (category) */
+export type CategoryRecord = RecordInterface & {
+  __typename?: 'CategoryRecord'
+  _allDescriptionLocales?: Maybe<Array<StringNonNullMultiLocaleField>>
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  description: Scalars['String']['output']
+  id: Scalars['ItemId']['output']
+  image: ImageFileField
   name: Scalars['String']['output']
   slug?: Maybe<Scalars['String']['output']>
 }
 
 /** Record of type Category (category) */
+export type CategoryRecord_AllDescriptionLocalesArgs = {
+  markdown?: InputMaybe<Scalars['Boolean']['input']>
+}
+
+/** Record of type Category (category) */
 export type CategoryRecord_SeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>
+}
+
+/** Record of type Category (category) */
+export type CategoryRecordDescriptionArgs = {
+  locale?: InputMaybe<SiteLocale>
+  markdown?: InputMaybe<Scalars['Boolean']['input']>
 }
 
 export type CollectionMetadata = {
@@ -358,8 +400,16 @@ export enum CustomPageModelOrderBy {
 }
 
 export type CustomPageModelSectionsField =
+  | BannerSectionRecord
+  | CategoryPreviewSectionRecord
+  | CtaSectionRecord
+  | FaqSectionRecord
+  | FeaturesSectionRecord
   | HeroSectionRecord
+  | LogoCloudSectionRecord
   | PageHeaderSectionRecord
+  | ProductListSectionRecord
+  | TestimonialSectionRecord
 
 export type CustomPageModelSectionsFieldListListNonNullMultiLocaleField = {
   __typename?: 'CustomPageModelSectionsFieldListListNonNullMultiLocaleField'
@@ -517,34 +567,6 @@ export enum FaviconType {
   AppleTouchIcon = 'appleTouchIcon',
   Icon = 'icon',
   MsApplication = 'msApplication',
-}
-
-/** Block of type Featured Categories Section (featured_categories_section) */
-export type FeaturedCategoriesSectionRecord = RecordInterface & {
-  __typename?: 'FeaturedCategoriesSectionRecord'
-  _createdAt: Scalars['DateTime']['output']
-  /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
-  _isValid: Scalars['BooleanType']['output']
-  _modelApiKey: Scalars['String']['output']
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>
-  /** Generates SEO and Social card meta tags to be used in your frontend */
-  _seoMetaTags: Array<Tag>
-  _status: ItemStatus
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
-  _updatedAt: Scalars['DateTime']['output']
-  categories: Array<CategoryRecord>
-  headline?: Maybe<Scalars['String']['output']>
-  id: Scalars['ItemId']['output']
-  subHeadline?: Maybe<Scalars['String']['output']>
-  title?: Maybe<Scalars['String']['output']>
-}
-
-/** Block of type Featured Categories Section (featured_categories_section) */
-export type FeaturedCategoriesSectionRecord_SeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>
 }
 
 /** Block of type Features Section  > Feature (features_section_feature) */
@@ -758,6 +780,30 @@ export type FileFilter = {
   neq?: InputMaybe<Scalars['UploadId']['input']>
   /** Filter records that do not have one of the specified uploads */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['UploadId']['input']>>>
+}
+
+/** Specifies how to filter Floating-point fields */
+export type FloatFilter = {
+  /** Search for records with an exact match */
+  eq?: InputMaybe<Scalars['FloatType']['input']>
+  /** Filter records with the specified field defined (i.e. with any value) or not */
+  exists?: InputMaybe<Scalars['BooleanType']['input']>
+  /** Filter records with a value that's strictly greater than the one specified */
+  gt?: InputMaybe<Scalars['FloatType']['input']>
+  /** Filter records with a value that's greater than or equal to the one specified */
+  gte?: InputMaybe<Scalars['FloatType']['input']>
+  /** Filter records with a value that's less than the one specified */
+  lt?: InputMaybe<Scalars['FloatType']['input']>
+  /** Filter records with a value that's less or equal than the one specified */
+  lte?: InputMaybe<Scalars['FloatType']['input']>
+  /** Exclude records with an exact match */
+  neq?: InputMaybe<Scalars['FloatType']['input']>
+}
+
+export type FloatTypeNonNullMultiLocaleField = {
+  __typename?: 'FloatTypeNonNullMultiLocaleField'
+  locale?: Maybe<SiteLocale>
+  value: Scalars['FloatType']['output']
 }
 
 /** Record of type Footer (footer) */
@@ -2695,7 +2741,6 @@ export type PageHeaderSectionRecord = RecordInterface & {
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
   _updatedAt: Scalars['DateTime']['output']
   id: Scalars['ItemId']['output']
-  image?: Maybe<ImageFileField>
   subTitle?: Maybe<Scalars['String']['output']>
   title?: Maybe<Scalars['String']['output']>
 }
@@ -2703,116 +2748,6 @@ export type PageHeaderSectionRecord = RecordInterface & {
 /** Block of type Page Header Section (page_header_section) */
 export type PageHeaderSectionRecord_SeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>
-}
-
-export type PageTemplateModelFilter = {
-  AND?: InputMaybe<Array<InputMaybe<PageTemplateModelFilter>>>
-  OR?: InputMaybe<Array<InputMaybe<PageTemplateModelFilter>>>
-  _createdAt?: InputMaybe<CreatedAtFilter>
-  _firstPublishedAt?: InputMaybe<PublishedAtFilter>
-  _isValid?: InputMaybe<BooleanFilter>
-  _locales?: InputMaybe<LocalesFilter>
-  _publicationScheduledAt?: InputMaybe<PublishedAtFilter>
-  _publishedAt?: InputMaybe<PublishedAtFilter>
-  _status?: InputMaybe<StatusFilter>
-  _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>
-  _updatedAt?: InputMaybe<UpdatedAtFilter>
-  id?: InputMaybe<ItemIdFilter>
-  title?: InputMaybe<StringFilter>
-}
-
-export enum PageTemplateModelOrderBy {
-  CreatedAtAsc = '_createdAt_ASC',
-  CreatedAtDesc = '_createdAt_DESC',
-  FirstPublishedAtAsc = '_firstPublishedAt_ASC',
-  FirstPublishedAtDesc = '_firstPublishedAt_DESC',
-  IsValidAsc = '_isValid_ASC',
-  IsValidDesc = '_isValid_DESC',
-  PublicationScheduledAtAsc = '_publicationScheduledAt_ASC',
-  PublicationScheduledAtDesc = '_publicationScheduledAt_DESC',
-  PublishedAtAsc = '_publishedAt_ASC',
-  PublishedAtDesc = '_publishedAt_DESC',
-  StatusAsc = '_status_ASC',
-  StatusDesc = '_status_DESC',
-  UnpublishingScheduledAtAsc = '_unpublishingScheduledAt_ASC',
-  UnpublishingScheduledAtDesc = '_unpublishingScheduledAt_DESC',
-  UpdatedAtAsc = '_updatedAt_ASC',
-  UpdatedAtDesc = '_updatedAt_DESC',
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-}
-
-export type PageTemplateModelSectionsField =
-  | HeroSectionRecord
-  | PageHeaderSectionRecord
-
-export type PageTemplateModelSectionsFieldListListNonNullMultiLocaleField = {
-  __typename?: 'PageTemplateModelSectionsFieldListListNonNullMultiLocaleField'
-  locale?: Maybe<SiteLocale>
-  value: Array<PageTemplateModelSectionsField>
-}
-
-/** Record of type Page Template (page_template) */
-export type PageTemplateRecord = RecordInterface & {
-  __typename?: 'PageTemplateRecord'
-  _allSectionsLocales?: Maybe<
-    Array<PageTemplateModelSectionsFieldListListNonNullMultiLocaleField>
-  >
-  _allTitleLocales?: Maybe<Array<StringNonNullMultiLocaleField>>
-  _createdAt: Scalars['DateTime']['output']
-  /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
-  _isValid: Scalars['BooleanType']['output']
-  _locales: Array<SiteLocale>
-  _modelApiKey: Scalars['String']['output']
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>
-  /** Generates SEO and Social card meta tags to be used in your frontend */
-  _seoMetaTags: Array<Tag>
-  _status: ItemStatus
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
-  _updatedAt: Scalars['DateTime']['output']
-  id: Scalars['ItemId']['output']
-  sections: Array<PageTemplateModelSectionsField>
-  title: Scalars['String']['output']
-}
-
-/** Record of type Page Template (page_template) */
-export type PageTemplateRecord_AllSectionsLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-}
-
-/** Record of type Page Template (page_template) */
-export type PageTemplateRecord_AllTitleLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-}
-
-/** Record of type Page Template (page_template) */
-export type PageTemplateRecord_SeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** Record of type Page Template (page_template) */
-export type PageTemplateRecordSectionsArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** Record of type Page Template (page_template) */
-export type PageTemplateRecordTitleArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** Specifies how to filter by parent (tree-like collections only) */
-export type ParentFilter = {
-  /** Filter records children of the specified record. Value must be a Record ID */
-  eq?: InputMaybe<Scalars['ItemId']['input']>
-  /** Filter records with a parent record or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>
 }
 
 /** Specifies how to filter by position (sorted and tree-like collections) */
@@ -2923,6 +2858,32 @@ export type PostRecord_SeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>
 }
 
+/** Block of type Product List Section (product_list_section) */
+export type ProductListSectionRecord = RecordInterface & {
+  __typename?: 'ProductListSectionRecord'
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  id: Scalars['ItemId']['output']
+  products: Array<ProductRecord>
+  title: Scalars['String']['output']
+}
+
+/** Block of type Product List Section (product_list_section) */
+export type ProductListSectionRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
 export type ProductModelFilter = {
   AND?: InputMaybe<Array<InputMaybe<ProductModelFilter>>>
   OR?: InputMaybe<Array<InputMaybe<ProductModelFilter>>>
@@ -2935,14 +2896,14 @@ export type ProductModelFilter = {
   _status?: InputMaybe<StatusFilter>
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>
   _updatedAt?: InputMaybe<UpdatedAtFilter>
+  category?: InputMaybe<LinkFilter>
+  colorDescription?: InputMaybe<StringFilter>
   id?: InputMaybe<ItemIdFilter>
   image?: InputMaybe<FileFilter>
-  pageTemplate?: InputMaybe<LinkFilter>
-  parent?: InputMaybe<ParentFilter>
+  name?: InputMaybe<StringFilter>
   position?: InputMaybe<PositionFilter>
+  price?: InputMaybe<FloatFilter>
   slug?: InputMaybe<SlugFilter>
-  subTitle?: InputMaybe<TextFilter>
-  title?: InputMaybe<StringFilter>
 }
 
 export enum ProductModelOrderBy {
@@ -2962,19 +2923,24 @@ export enum ProductModelOrderBy {
   UnpublishingScheduledAtDesc = '_unpublishingScheduledAt_DESC',
   UpdatedAtAsc = '_updatedAt_ASC',
   UpdatedAtDesc = '_updatedAt_DESC',
+  ColorDescriptionAsc = 'colorDescription_ASC',
+  ColorDescriptionDesc = 'colorDescription_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
   PositionAsc = 'position_ASC',
   PositionDesc = 'position_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
+  PriceAsc = 'price_ASC',
+  PriceDesc = 'price_DESC',
 }
 
 /** Record of type Product (product) */
 export type ProductRecord = RecordInterface & {
   __typename?: 'ProductRecord'
-  _allSubTitleLocales?: Maybe<Array<StringMultiLocaleField>>
-  _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>
+  _allColorDescriptionLocales?: Maybe<Array<StringMultiLocaleField>>
+  _allNameLocales?: Maybe<Array<StringMultiLocaleField>>
+  _allPriceLocales?: Maybe<Array<FloatTypeNonNullMultiLocaleField>>
   _createdAt: Scalars['DateTime']['output']
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>
@@ -2989,24 +2955,28 @@ export type ProductRecord = RecordInterface & {
   _status: ItemStatus
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
   _updatedAt: Scalars['DateTime']['output']
-  children?: Maybe<Array<Maybe<ProductRecord>>>
+  category: CategoryRecord
+  colorDescription?: Maybe<Scalars['String']['output']>
   id: Scalars['ItemId']['output']
-  image?: Maybe<ImageFileField>
-  pageTemplate: PageTemplateRecord
-  parent?: Maybe<ProductRecord>
+  image: ImageFileField
+  name?: Maybe<Scalars['String']['output']>
   position?: Maybe<Scalars['IntType']['output']>
+  price: Scalars['FloatType']['output']
   slug: Scalars['String']['output']
-  subTitle?: Maybe<Scalars['String']['output']>
-  title?: Maybe<Scalars['String']['output']>
 }
 
 /** Record of type Product (product) */
-export type ProductRecord_AllSubTitleLocalesArgs = {
-  markdown?: InputMaybe<Scalars['Boolean']['input']>
+export type ProductRecord_AllColorDescriptionLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
 }
 
 /** Record of type Product (product) */
-export type ProductRecord_AllTitleLocalesArgs = {
+export type ProductRecord_AllNameLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+}
+
+/** Record of type Product (product) */
+export type ProductRecord_AllPriceLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>
 }
 
@@ -3016,13 +2986,19 @@ export type ProductRecord_SeoMetaTagsArgs = {
 }
 
 /** Record of type Product (product) */
-export type ProductRecordSubTitleArgs = {
+export type ProductRecordColorDescriptionArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
   locale?: InputMaybe<SiteLocale>
-  markdown?: InputMaybe<Scalars['Boolean']['input']>
 }
 
 /** Record of type Product (product) */
-export type ProductRecordTitleArgs = {
+export type ProductRecordNameArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Record of type Product (product) */
+export type ProductRecordPriceArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>
   locale?: InputMaybe<SiteLocale>
 }
@@ -3055,8 +3031,6 @@ export type Query = {
   /** Returns meta information regarding a record collection */
   _allCustomPagesMeta: CollectionMetadata
   /** Returns meta information regarding a record collection */
-  _allPageTemplatesMeta: CollectionMetadata
-  /** Returns meta information regarding a record collection */
   _allPostsMeta: CollectionMetadata
   /** Returns meta information regarding a record collection */
   _allProductsMeta: CollectionMetadata
@@ -3070,8 +3044,6 @@ export type Query = {
   allCategories: Array<CategoryRecord>
   /** Returns a collection of records */
   allCustomPages: Array<CustomPageRecord>
-  /** Returns a collection of records */
-  allPageTemplates: Array<PageTemplateRecord>
   /** Returns a collection of records */
   allPosts: Array<PostRecord>
   /** Returns a collection of records */
@@ -3092,8 +3064,6 @@ export type Query = {
   homePage?: Maybe<HomePageRecord>
   /** Returns the single instance record */
   menu?: Maybe<MenuRecord>
-  /** Returns a specific record */
-  pageTemplate?: Maybe<PageTemplateRecord>
   /** Returns a specific record */
   post?: Maybe<PostRecord>
   /** Returns a specific record */
@@ -3117,12 +3087,6 @@ export type Query_AllCategoriesMetaArgs = {
 /** The query root for this schema */
 export type Query_AllCustomPagesMetaArgs = {
   filter?: InputMaybe<CustomPageModelFilter>
-  locale?: InputMaybe<SiteLocale>
-}
-
-/** The query root for this schema */
-export type Query_AllPageTemplatesMetaArgs = {
-  filter?: InputMaybe<PageTemplateModelFilter>
   locale?: InputMaybe<SiteLocale>
 }
 
@@ -3177,16 +3141,6 @@ export type QueryAllCustomPagesArgs = {
   first?: InputMaybe<Scalars['IntType']['input']>
   locale?: InputMaybe<SiteLocale>
   orderBy?: InputMaybe<Array<InputMaybe<CustomPageModelOrderBy>>>
-  skip?: InputMaybe<Scalars['IntType']['input']>
-}
-
-/** The query root for this schema */
-export type QueryAllPageTemplatesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  filter?: InputMaybe<PageTemplateModelFilter>
-  first?: InputMaybe<Scalars['IntType']['input']>
-  locale?: InputMaybe<SiteLocale>
-  orderBy?: InputMaybe<Array<InputMaybe<PageTemplateModelOrderBy>>>
   skip?: InputMaybe<Scalars['IntType']['input']>
 }
 
@@ -3266,14 +3220,6 @@ export type QueryHomePageArgs = {
 export type QueryMenuArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>
   locale?: InputMaybe<SiteLocale>
-}
-
-/** The query root for this schema */
-export type QueryPageTemplateArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>
-  filter?: InputMaybe<PageTemplateModelFilter>
-  locale?: InputMaybe<SiteLocale>
-  orderBy?: InputMaybe<Array<InputMaybe<PageTemplateModelOrderBy>>>
 }
 
 /** The query root for this schema */
@@ -3940,6 +3886,61 @@ export type BannerSectionFragmentFragment = {
   text: string
 }
 
+export type CategoryPreviewSectionFragmentFragment = {
+  __typename?: 'CategoryPreviewSectionRecord'
+  id: string
+  _modelApiKey: string
+  category: {
+    __typename?: 'CategoryRecord'
+    id: string
+    name: string
+    slug?: string | null
+    description: string
+    image: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
+    }
+  }
+  button: {
+    __typename?: 'ButtonRecord'
+    id: string
+    label: string
+    variant: string
+    size: string
+    useExternalLink?: boolean | null
+    externalLink?: string | null
+    linkTo?:
+      | { __typename?: 'AuthorRecord' }
+      | {
+          __typename?: 'CustomPageRecord'
+          id: string
+          slug: string
+          _modelApiKey: string
+        }
+      | { __typename?: 'HomePageRecord'; id: string; _modelApiKey: string }
+      | { __typename?: 'PostRecord' }
+      | {
+          __typename?: 'ProductRecord'
+          id: string
+          slug: string
+          _modelApiKey: string
+        }
+      | null
+  }
+}
+
 export type FaqSectionFragmentFragment = {
   __typename?: 'FaqSectionRecord'
   id: string
@@ -4137,22 +4138,37 @@ export type PageHeaderSectionFragmentFragment = {
   _modelApiKey: string
   title?: string | null
   subTitle?: string | null
-  image?: {
-    __typename?: 'ImageFileField'
-    responsiveImage: {
-      __typename?: 'ResponsiveImage'
-      srcSet: string
-      webpSrcSet: string
-      sizes: string
-      src: string
-      width: number
-      height: number
-      aspectRatio: number
-      alt?: string | null
-      title?: string | null
-      base64?: string | null
+}
+
+export type ProductListSectionFragmentFragment = {
+  __typename?: 'ProductListSectionRecord'
+  id: string
+  _modelApiKey: string
+  title: string
+  products: Array<{
+    __typename?: 'ProductRecord'
+    id: string
+    name?: string | null
+    price: number
+    colorDescription?: string | null
+    slug: string
+    image: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
     }
-  } | null
+  }>
 }
 
 export type TestimonialSectionFragmentFragment = {
@@ -4472,6 +4488,311 @@ export const BannerSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BannerSectionFragmentFragment, unknown>
+export const ResponsiveImageFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'responsiveImageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ResponsiveImage' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'srcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'webpSrcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'sizes' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'src' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'aspectRatio' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'base64' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ResponsiveImageFragmentFragment, unknown>
+export const ButtonFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'buttonFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ButtonRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'useExternalLink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'linkTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'HomePageRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'CustomPageRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ProductRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'externalLink' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ButtonFragmentFragment, unknown>
+export const CategoryPreviewSectionFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'CategoryPreviewSectionFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'CategoryPreviewSectionRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'category' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'image' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'button' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'buttonFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'responsiveImageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ResponsiveImage' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'srcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'webpSrcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'sizes' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'src' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'aspectRatio' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'base64' } },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'buttonFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ButtonRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'label' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'useExternalLink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'linkTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'HomePageRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'CustomPageRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ProductRecord' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '_modelApiKey' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'externalLink' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CategoryPreviewSectionFragmentFragment, unknown>
 export const FaqSectionFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -4505,34 +4826,6 @@ export const FaqSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FaqSectionFragmentFragment, unknown>
-export const ResponsiveImageFragmentFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'responsiveImageFragment' },
-      typeCondition: {
-        kind: 'NamedType',
-        name: { kind: 'Name', value: 'ResponsiveImage' },
-      },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'srcSet' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'webpSrcSet' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'sizes' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'src' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'width' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'height' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'aspectRatio' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'base64' } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ResponsiveImageFragmentFragment, unknown>
 export const IconFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -4682,92 +4975,6 @@ export const FeaturesSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FeaturesSectionFragmentFragment, unknown>
-export const ButtonFragmentFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'buttonFragment' },
-      typeCondition: {
-        kind: 'NamedType',
-        name: { kind: 'Name', value: 'ButtonRecord' },
-      },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'label' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'variant' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'size' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'useExternalLink' } },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'linkTo' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'HomePageRecord' },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '_modelApiKey' },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'CustomPageRecord' },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '_modelApiKey' },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'ProductRecord' },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '_modelApiKey' },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          { kind: 'Field', name: { kind: 'Name', value: 'externalLink' } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ButtonFragmentFragment, unknown>
 export const HeroSectionFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -5212,39 +5419,77 @@ export const PageHeaderSectionFragmentFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'subTitle' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PageHeaderSectionFragmentFragment, unknown>
+export const ProductListSectionFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ProductListSectionFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ProductListSectionRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'image' },
+            name: { kind: 'Name', value: 'products' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'price' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'responsiveImage' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'imgixParams' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'auto' },
-                            value: { kind: 'EnumValue', value: 'format' },
-                          },
-                        ],
-                      },
-                    },
-                  ],
+                  name: { kind: 'Name', value: 'colorDescription' },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'image' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       {
-                        kind: 'FragmentSpread',
-                        name: {
-                          kind: 'Name',
-                          value: 'responsiveImageFragment',
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -5280,7 +5525,7 @@ export const PageHeaderSectionFragmentFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<PageHeaderSectionFragmentFragment, unknown>
+} as unknown as DocumentNode<ProductListSectionFragmentFragment, unknown>
 export const TestimonialSectionFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [

@@ -1,3 +1,5 @@
+import { CategoryPreviewSection } from '@/components/blocks/CategoryPreviewSection/CategoryPreviewSection'
+import { ProductListSection } from '@/components/blocks/ProductListSection/ProductListSection'
 import { ReactNode } from 'react'
 import { BannerSection } from '@/components/blocks/BannerSection/BannerSection'
 import { NavigationSection } from '@/components/blocks/NavigationSection/NavigationSection'
@@ -23,4 +25,6 @@ export const componentsMap = {
   testimonial_section: TestimonialSection,
   faq_section: FaqSection,
   cta_section: CtaSection,
+  product_list_section: ProductListSection,
+  category_preview_section: CategoryPreviewSection,
 }
