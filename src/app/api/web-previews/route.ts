@@ -37,12 +37,12 @@ const findUrlForItem = ({
     // @todo: add your own dynamic routes here
     case 'home_page':
       return `/`
-    case 'custom-page':
+    case 'custom_page':
       return `/${item.attributes.slug}`
     case 'post':
-      return `/post/${item.attributes.slug}`
+      return `/posts/${item.attributes.slug}`
     case 'product':
-      return `/product/${item.attributes.slug}`
+      return `/products/${item.attributes.slug}`
     default:
       return null
   }
