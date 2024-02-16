@@ -1,0 +1,27 @@
+{
+  "name": "nextjs-dato-tailwind-template",
+  "description": "A template project featuring Next.js, Shadcn UI, Tailwind CSS, and built-in i18n support.",
+  "previewImage": "https://www.datocms-assets.com/119644/1708044654-screenshot-2024-02-15-at-19-49-59-blog-example-with-datocms.png",
+  "livePreviewUrl": "https://nextjs-dato-tailwind-template-icvunxy3l-duy-the-developer.vercel.app/en",
+  "datocmsProjectId": "119644",
+  "deploymentType": "vercel",
+  "environmentVariables": {
+    "DATOCMS_BACKEND_URL": {
+      "type": "datocmsProjectUrl"
+    },
+    "NEXT_DATOCMS_READ_ONLY_API_TOKEN": {
+      "type": "datocmsAccessToken",
+      "tokenName": "Read-only API Token"
+    },
+    "NEXT_DATOCMS_PREVIEW_SECRET": {
+      "type": "string",
+      "value": "shhh"
+    },
+    "NEXT_DATOCMS_API_TOKEN": {
+      "type": "datocmsAccessToken",
+      "tokenName": "Full-access API Token"
+    }
+  },
+  "buildCommand": "yarn build",
+  "postInstallUrl": "/api/post-install"
+}

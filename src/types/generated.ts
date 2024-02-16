@@ -290,6 +290,30 @@ export type CreatedAtFilter = {
   neq?: InputMaybe<Scalars['DateTime']['input']>
 }
 
+/** Block of type CTA Section (cta_section) */
+export type CtaSectionRecord = RecordInterface & {
+  __typename?: 'CtaSectionRecord'
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  id: Scalars['ItemId']['output']
+}
+
+/** Block of type CTA Section (cta_section) */
+export type CtaSectionRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
 export type CustomPageModelFilter = {
   AND?: InputMaybe<Array<InputMaybe<CustomPageModelFilter>>>
   OR?: InputMaybe<Array<InputMaybe<CustomPageModelFilter>>>
@@ -422,6 +446,68 @@ export type DateFilter = {
   lte?: InputMaybe<Scalars['Date']['input']>
   /** Exclude records with an exact match */
   neq?: InputMaybe<Scalars['Date']['input']>
+}
+
+/** Block of type FAQ Section > Item (faq_section_item) */
+export type FaqSectionItemRecord = RecordInterface & {
+  __typename?: 'FaqSectionItemRecord'
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  answer: Scalars['String']['output']
+  id: Scalars['ItemId']['output']
+  question: Scalars['String']['output']
+}
+
+/** Block of type FAQ Section > Item (faq_section_item) */
+export type FaqSectionItemRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Block of type FAQ Section > Item (faq_section_item) */
+export type FaqSectionItemRecordAnswerArgs = {
+  markdown?: InputMaybe<Scalars['Boolean']['input']>
+}
+
+/** Block of type FAQ Section > Item (faq_section_item) */
+export type FaqSectionItemRecordQuestionArgs = {
+  markdown?: InputMaybe<Scalars['Boolean']['input']>
+}
+
+/** Block of type FAQ Section (faq_section) */
+export type FaqSectionRecord = RecordInterface & {
+  __typename?: 'FaqSectionRecord'
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  id: Scalars['ItemId']['output']
+  items: Array<FaqSectionItemRecord>
+  title: Scalars['String']['output']
+}
+
+/** Block of type FAQ Section (faq_section) */
+export type FaqSectionRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
 }
 
 export enum FaviconType {
@@ -796,6 +882,8 @@ export type HeroSectionRecord_SeoMetaTagsArgs = {
 }
 
 export type HomePageModelSectionsField =
+  | CtaSectionRecord
+  | FaqSectionRecord
   | FeaturesSectionRecord
   | HeroSectionRecord
   | LogoCloudSectionRecord
@@ -3849,6 +3937,19 @@ export type BannerSectionFragmentFragment = {
   text: string
 }
 
+export type FaqSectionFragment = {
+  __typename?: 'FaqSectionRecord'
+  id: string
+  _modelApiKey: string
+  title: string
+  items: Array<{
+    __typename?: 'FaqSectionItemRecord'
+    id: string
+    question: string
+    answer: string
+  }>
+}
+
 export type FeaturesSectionFragmentFragment = {
   __typename?: 'FeaturesSectionRecord'
   id: string
@@ -4368,6 +4469,39 @@ export const BannerSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BannerSectionFragmentFragment, unknown>
+export const FaqSectionFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'FaqSection' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'FaqSectionRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'items' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'question' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'answer' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FaqSectionFragment, unknown>
 export const ResponsiveImageFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [

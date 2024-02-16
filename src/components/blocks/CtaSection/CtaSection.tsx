@@ -1,6 +1,18 @@
 import { Container } from '@/components/Container'
 import { Button } from '@/components/ui/button'
 
+export const CTA_SECTION_FRAGMENT = `
+  fragment CtaSectionFragment on CtaSectionRecord {
+    id
+    _modelApiKey
+    title
+    subTitle 
+    buttons {
+      ...buttonFragment
+    }
+  }
+`
+
 export function CtaSection() {
   return (
     <div className="bg-background">

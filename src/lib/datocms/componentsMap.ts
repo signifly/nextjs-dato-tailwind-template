@@ -7,6 +7,7 @@ import { LogoCloudSection } from '@/components/blocks/LogoCloudSection/LogoCloud
 import { FeaturesSection } from '@/components/blocks/FeaturesSection/FeaturesSection'
 import { TestimonialSection } from '@/components/blocks/TestimonialSection/TestimonialSection'
 import { FaqSection } from '@/components/blocks/FaqSection/FaqSection'
+import { CtaSection } from '@/components/blocks/CtaSection/CtaSection'
 
 export type ComponentsMap = {
   [key: string]: ReactNode
@@ -21,4 +22,5 @@ export const componentsMap = {
   features_section: FeaturesSection,
   testimonial_section: TestimonialSection,
   faq_section: FaqSection,
+  cta_section: CtaSection,
 }
