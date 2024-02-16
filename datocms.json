@@ -20,6 +20,10 @@
     "NEXT_DATOCMS_PREVIEW_SECRET": {
       "type": "string",
       "value": "shhh"
+    },
+    "NEXT_BASE_URL": {
+      "type": "string",
+      "value": "http://localhost:3000"
     }
   },
   "buildCommand": "yarn build",
