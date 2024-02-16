@@ -1,3 +1,4 @@
+import { FeaturedBlogsSection } from '@/components/blocks/FeaturedBlogsSection/FeaturedBlogsSection'
 import { CategoryPreviewSection } from '@/components/blocks/CategoryPreviewSection/CategoryPreviewSection'
 import { ProductListSection } from '@/components/blocks/ProductListSection/ProductListSection'
 import { ReactNode } from 'react'
@@ -27,4 +28,5 @@ export const componentsMap = {
   cta_section: CtaSection,
   product_list_section: ProductListSection,
   category_preview_section: CategoryPreviewSection,
+  featured_blogs_section: FeaturedBlogsSection,
 }

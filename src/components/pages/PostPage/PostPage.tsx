@@ -3,13 +3,14 @@ import { MoreStories } from '@/components/MoreStories'
 import { PostBody } from '@/components/PostBody'
 import { PostHeader } from '@/components/PostHeader'
 import { SectionSeparator } from '@/components/SectionSeparator'
+import { Container } from '@/components/Container'
 
 // @ts-ignore
 export function PostPage({ data }) {
   const { post, morePosts } = data
 
   return (
-    <>
+    <Container>
       <Header />
       <article>
         <PostHeader
@@ -22,6 +23,6 @@ export function PostPage({ data }) {
       </article>
       <SectionSeparator />
       {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-    </>
+    </Container>
   )
 }

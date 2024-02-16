@@ -7,6 +7,7 @@ import { HERO_SECTION_FRAGMENT } from '@/components/blocks/HeroSection/HeroSecti
 import { PAGE_HEADER_SECTION_FRAGMENT } from '@/components/blocks/PageHeaderSection/PageHeaderSection'
 import { PRODUCT_LIST_SECTION_FRAGMENT } from '@/components/blocks/ProductListSection/ProductListSection'
 import { CATEGORY_PREVIEW_SECTION_FRAGMENT } from '@/components/blocks/CategoryPreviewSection/CategoryPreviewSection'
+import { FEATURED_BLOGS_SECTION_FRAGMENT } from '@/components/blocks/FeaturedBlogsSection/FeaturedBlogsSection'
 
 export const PAGE_BY_SLUG_QUERY = gql`
   query PageBySlugQuery($locale: SiteLocale, $slug: String) {
@@ -29,6 +30,7 @@ export const PAGE_BY_SLUG_QUERY = gql`
         ...PageHeaderSectionFragment
 				...ProductListSectionFragment
 				...CategoryPreviewSectionFragment
+				...FeaturedBlogsSectionFragment
       }
     }
   }
@@ -37,6 +39,7 @@ export const PAGE_BY_SLUG_QUERY = gql`
   ${PAGE_HEADER_SECTION_FRAGMENT}
 	${PRODUCT_LIST_SECTION_FRAGMENT}
 	${CATEGORY_PREVIEW_SECTION_FRAGMENT}
+	${FEATURED_BLOGS_SECTION_FRAGMENT}
 
   ${metaTagsFragment}
   ${responsiveImageFragment}

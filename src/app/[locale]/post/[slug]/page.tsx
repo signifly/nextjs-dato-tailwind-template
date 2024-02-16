@@ -8,26 +8,25 @@ import { DraftPostPage, PostPage } from '@/components/pages/PostPage'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Locale } from '@/i18n'
 
-export const revalidate = 10
-
 export async function generateStaticParams() {
   const { allPosts } = await performRequest({ query: `{ allPosts { slug } }` })
 
   return allPosts.map(({ slug }: any) => slug)
 }
 
-function getPageRequest(slug: string) {
+function getPageRequest({ slug, locale }: PageProps['params']) {
   const { isEnabled } = draftMode()
 
   return {
     query: POST_BY_SLUG_QUERY,
     includeDrafts: isEnabled,
     variables: { slug },
+    revalidate: 10,
   }
 }
 
 export async function generateMetadata({ params }: any) {
-  const { site, post } = await performRequest(getPageRequest(params.slug))
+  const { site, post } = await performRequest(getPageRequest(params))
 
   return toNextMetadata([...site.favicon, ...post.seo])
 }
@@ -40,11 +39,11 @@ type PageProps = {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { locale, slug } = params
+  const { locale } = params
   unstable_setRequestLocale(locale)
   const { isEnabled } = draftMode()
 
-  const pageRequest = getPageRequest(slug)
+  const pageRequest = getPageRequest(params)
   const data = await performRequest(pageRequest)
 
   if (isEnabled) {
