@@ -21,31 +21,71 @@ const baseUrl = process.env.VERCEL_BRANCH_URL
     process.env.URL
 
 async function installWebPreviewsPlugin(client: Client) {
-  const webPreviewsPlugin = await client.plugins.create({
-    package_name: 'datocms-plugin-web-previews',
-  })
-
-  await client.plugins.update(webPreviewsPlugin, {
-    parameters: {
-      frontends: [
-        { name: 'Production', previewWebhook: `${baseUrl}/api/web-previews` },
-      ],
-      startOpen: true,
-    },
-  })
+  let webPreviewsPlugin
+  try {
+    webPreviewsPlugin = await client.plugins.create({
+      package_name: 'datocms-plugin-web-previews',
+    })
+  } catch (error) {
+    console.log(
+      '[ ERROR ] Failed to create web previews plugin, attempting to retrieve from existing list...',
+      error,
+    )
+    const allPlugins = await client.plugins.list()
+    webPreviewsPlugin = allPlugins.find(
+      (plugin) => plugin.package_name === 'datocms-plugin-web-previews',
+    )
+  } finally {
+    if (webPreviewsPlugin) {
+      await client.plugins.update(webPreviewsPlugin, {
+        parameters: {
+          frontends: [
+            {
+              name: 'Production',
+              previewWebhook: `${baseUrl}/api/web-previews`,
+            },
+          ],
+          startOpen: true,
+        },
+      })
+      console.log('[ SUCCESS ] Web previews plugin installed and configured!')
+    } else {
+      console.log('[ ERROR ] Failed to install web previews plugin')
+    }
+  }
 }
 
 async function installSeoReadabilityPlugin(client: Client) {
-  const seoReadabilityPlugin = await client.plugins.create({
-    package_name: 'datocms-plugin-seo-readability-analysis',
-  })
-
-  await client.plugins.update(seoReadabilityPlugin, {
-    parameters: {
-      htmlGeneratorUrl: `${baseUrl}/api/seo-readability-metadata`,
-      autoApplyToFieldsWithApiKey: 'seo_readability_analysis',
-    },
-  })
+  let seoReadabilityPlugin
+  try {
+    seoReadabilityPlugin = await client.plugins.create({
+      package_name: 'datocms-plugin-seo-readability-analysis',
+    })
+  } catch (error) {
+    console.log(
+      '[ ERROR ] Failed to create SEO readability plugin, attempting to retrieve from existing list...',
+      error,
+    )
+    const allPlugins = await client.plugins.list()
+    seoReadabilityPlugin = allPlugins.find(
+      (plugin) =>
+        plugin.package_name === 'datocms-plugin-seo-readability-analysis',
+    )
+  } finally {
+    if (seoReadabilityPlugin) {
+      await client.plugins.update(seoReadabilityPlugin, {
+        parameters: {
+          htmlGeneratorUrl: `${baseUrl}/api/seo-readability-metadata`,
+          autoApplyToFieldsWithApiKey: 'seo_readability_analysis',
+        },
+      })
+      console.log(
+        '[ SUCCESS ] SEO readability plugin installed and configured!',
+      )
+    } else {
+      console.log('[ ERROR ] Failed to install SEO readability plugin')
+    }
+  }
 }
 
 export async function OPTIONS() {
