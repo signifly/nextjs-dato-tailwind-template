@@ -8,7 +8,7 @@ const fetchDatoContent = async (
   revalidate: number | undefined,
 ) => {
   const headers = {
-    Authorization: `Bearer ${process.env.DATOCMS_READ_ONLY_API_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_DATOCMS_READ_ONLY_API_TOKEN}`,
     ...(includeDrafts ? { 'X-Include-Drafts': 'true' } : {}),
     ...(excludeInvalid ? { 'X-Exclude-Invalid': 'true' } : {}),
     ...(visualEditingBaseUrl
@@ -18,7 +18,7 @@ const fetchDatoContent = async (
         }
       : {}),
     ...(process.env.NEXT_DATOCMS_ENVIRONMENT
-      ? { 'X-Environment': process.env.NEXT_DATOCMS_ENVIRONMENT }
+      ? { 'X-Environment': process.env.NEXT_DATOCMS_READ_ONLY_API_TOKEN }
       : {}),
   }
 
