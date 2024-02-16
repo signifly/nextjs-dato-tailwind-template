@@ -14,7 +14,6 @@ export async function generateStaticParams() {
 }
 
 function getPageRequest({ slug, locale }: PageProps['params']) {
-  console.log('getPageRequest', slug, locale)
   const { isEnabled } = draftMode()
   return {
     query: PAGE_BY_SLUG_QUERY,
@@ -25,7 +24,7 @@ function getPageRequest({ slug, locale }: PageProps['params']) {
   }
 }
 
-export async function generateMetadata({ params }: PageProps['params']) {
+export async function generateMetadata({ params }: PageProps) {
   const { site, page } = await performRequest(getPageRequest(params))
   return toNextMetadata([...site.favicon, ...page.seo])
 }
