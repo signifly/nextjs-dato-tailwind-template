@@ -4,7 +4,6 @@
 import { ComponentParser } from '@/lib/datocms/ComponentParser'
 
 import { FaqSection } from '@/components/blocks/FaqSection/FaqSection'
-import { TestimonialSection } from '@/components/blocks/TestimonialSection/TestimonialSection'
 import { CtaSection } from '@/components/blocks/CtaSection/CtaSection'
 
 export function HomePage({ data }: any) {
@@ -18,10 +17,8 @@ export function HomePage({ data }: any) {
       {data?.page?.sections?.map((s: any) => (
         <ComponentParser key={s.id} data={s} />
       ))}
-      <TestimonialSection />
       <FaqSection />
       <CtaSection />
-
       {/* <Intro /> */}
       {/* {heroPost && ( */}
       {/*   <HeroPost */}

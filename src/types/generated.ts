@@ -800,6 +800,7 @@ export type HomePageModelSectionsField =
   | HeroSectionRecord
   | LogoCloudSectionRecord
   | PageHeaderSectionRecord
+  | TestimonialSectionRecord
 
 export type HomePageModelSectionsFieldListListNonNullMultiLocaleField = {
   __typename?: 'HomePageModelSectionsFieldListListNonNullMultiLocaleField'
@@ -3392,6 +3393,71 @@ export type Tag = {
   tag: Scalars['String']['output']
 }
 
+/** Block of type Testimonial Section (testimonial_section) */
+export type TestimonialSectionRecord = RecordInterface & {
+  __typename?: 'TestimonialSectionRecord'
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  column1: Array<TestimonialSectionTestimonialRecord>
+  column2: Array<TestimonialSectionTestimonialRecord>
+  column3: Array<TestimonialSectionTestimonialRecord>
+  column4: Array<TestimonialSectionTestimonialRecord>
+  featuredTestimonial: TestimonialSectionTestimonialRecord
+  id: Scalars['ItemId']['output']
+  subTitle: Scalars['String']['output']
+  title: Scalars['String']['output']
+}
+
+/** Block of type Testimonial Section (testimonial_section) */
+export type TestimonialSectionRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Block of type Testimonial Section > Testimonial (testimonial_section_testimonial) */
+export type TestimonialSectionTestimonialRecord = RecordInterface & {
+  __typename?: 'TestimonialSectionTestimonialRecord'
+  _createdAt: Scalars['DateTime']['output']
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>
+  _isValid: Scalars['BooleanType']['output']
+  _modelApiKey: Scalars['String']['output']
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>
+  _status: ItemStatus
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
+  _updatedAt: Scalars['DateTime']['output']
+  authorImage: ImageFileField
+  authorLogo?: Maybe<FileField>
+  authorName: Scalars['String']['output']
+  authorTwitterHandle: Scalars['String']['output']
+  id: Scalars['ItemId']['output']
+  text: Scalars['String']['output']
+}
+
+/** Block of type Testimonial Section > Testimonial (testimonial_section_testimonial) */
+export type TestimonialSectionTestimonialRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>
+}
+
+/** Block of type Testimonial Section > Testimonial (testimonial_section_testimonial) */
+export type TestimonialSectionTestimonialRecordTextArgs = {
+  markdown?: InputMaybe<Scalars['Boolean']['input']>
+}
+
 /** Specifies how to filter text fields */
 export type TextFilter = {
   /** Filter records with the specified field defined (i.e. with any value) or not [DEPRECATED] */
@@ -3983,6 +4049,142 @@ export type PageHeaderSectionFragmentFragment = {
       base64?: string | null
     }
   } | null
+}
+
+export type TestimonialSectionFragmentFragment = {
+  __typename?: 'TestimonialSectionRecord'
+  id: string
+  _modelApiKey: string
+  title: string
+  subTitle: string
+  featuredTestimonial: {
+    __typename?: 'TestimonialSectionTestimonialRecord'
+    text: string
+    authorName: string
+    authorTwitterHandle: string
+    authorImage: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
+    }
+    authorLogo?: {
+      __typename?: 'FileField'
+      url: string
+      alt?: string | null
+      responsiveImage?: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      } | null
+    } | null
+  }
+  column1: Array<{
+    __typename?: 'TestimonialSectionTestimonialRecord'
+    text: string
+    authorName: string
+    authorTwitterHandle: string
+    authorImage: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
+    }
+  }>
+  column2: Array<{
+    __typename?: 'TestimonialSectionTestimonialRecord'
+    text: string
+    authorName: string
+    authorTwitterHandle: string
+    authorImage: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
+    }
+  }>
+  column3: Array<{
+    __typename?: 'TestimonialSectionTestimonialRecord'
+    text: string
+    authorName: string
+    authorTwitterHandle: string
+    authorImage: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
+    }
+  }>
+  column4: Array<{
+    __typename?: 'TestimonialSectionTestimonialRecord'
+    text: string
+    authorName: string
+    authorTwitterHandle: string
+    authorImage: {
+      __typename?: 'ImageFileField'
+      responsiveImage: {
+        __typename?: 'ResponsiveImage'
+        srcSet: string
+        webpSrcSet: string
+        sizes: string
+        src: string
+        width: number
+        height: number
+        aspectRatio: number
+        alt?: string | null
+        title?: string | null
+        base64?: string | null
+      }
+    }
+  }>
 }
 
 export type ButtonFragmentFragment = {
@@ -4942,6 +5144,374 @@ export const PageHeaderSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<PageHeaderSectionFragmentFragment, unknown>
+export const TestimonialSectionFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TestimonialSectionFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'TestimonialSectionRecord' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: '_modelApiKey' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'subTitle' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'featuredTestimonial' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'authorName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorTwitterHandle' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorLogo' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'column1' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'authorName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorTwitterHandle' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'column2' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'authorName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorTwitterHandle' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'column3' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'authorName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorTwitterHandle' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'column4' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'authorName' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorTwitterHandle' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'authorImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'responsiveImage' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'imgixParams' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'auto' },
+                                  value: { kind: 'EnumValue', value: 'format' },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: {
+                                kind: 'Name',
+                                value: 'responsiveImageFragment',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'responsiveImageFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ResponsiveImage' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'srcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'webpSrcSet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'sizes' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'src' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'aspectRatio' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'alt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'base64' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TestimonialSectionFragmentFragment, unknown>
 export const MetaTagsFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [

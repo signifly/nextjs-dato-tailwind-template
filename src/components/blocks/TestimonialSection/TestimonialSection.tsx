@@ -1,19 +1,21 @@
 import { cn } from '@/lib/utils'
 import { Container } from '@/components/Container'
+import { gql } from 'graphql-request'
+import { TestimonialSectionRecord } from '@/types/generated'
+import { Image as DatoImage } from 'react-datocms'
 
-const featuredTestimonial = {
-  body: 'Integer id nunc sit semper purus. Bibendum at lacus ut arcu blandit montes vitae auctor libero. Hac condimentum dignissim nibh vulputate ut nunc. Amet nibh orci mi venenatis blandit vel et proin. Non hendrerit in vel ac diam.',
-  author: {
-    name: 'Brenna Goyette',
-    handle: 'brennagoyette',
-    imageUrl:
-      'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=1024&h=1024&q=80',
-    logoUrl: 'https://tailwindui.com/img/logos/savvycal-logo-gray-900.svg',
-  },
-}
 const testimonials = [
   [
     [
+      {
+        body: 'Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.',
+        author: {
+          name: 'Leslie Alexander',
+          handle: 'lesliealexander',
+          imageUrl:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        },
+      },
       {
         body: 'Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.',
         author: {
@@ -61,12 +63,101 @@ const testimonials = [
             'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
       },
+      {
+        body: 'Molestias ea earum quos nostrum doloremque sed. Quaerat quasi aut velit incidunt excepturi rerum voluptatem minus harum.',
+        author: {
+          name: 'Leonard Krasner',
+          handle: 'leonardkrasner',
+          imageUrl:
+            'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        },
+      },
       // More testimonials...
     ],
   ],
 ]
 
-export function TestimonialSection() {
+export const TESTIMONIAL_SECTION_FRAGMENT = gql`
+  fragment TestimonialSectionFragment on TestimonialSectionRecord {
+    id
+    _modelApiKey
+    title
+    subTitle
+    featuredTestimonial {
+      text
+      authorName
+      authorTwitterHandle
+      authorImage {
+        responsiveImage(imgixParams: { auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
+      authorLogo {
+        url
+        alt
+        responsiveImage(imgixParams: { auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
+    }
+    column1 {
+      text
+      authorName
+      authorTwitterHandle
+      authorImage {
+        responsiveImage(imgixParams: { auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
+    }
+    column2 {
+      text
+      authorName
+      authorTwitterHandle
+      authorImage {
+        responsiveImage(imgixParams: { auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
+    }
+    column3 {
+      text
+      authorName
+      authorTwitterHandle
+      authorImage {
+        responsiveImage(imgixParams: { auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
+    }
+    column4 {
+      text
+      authorName
+      authorTwitterHandle
+      authorImage {
+        responsiveImage(imgixParams: { auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
+    }
+  }
+`
+
+export function TestimonialSection(props: TestimonialSectionRecord) {
+  const {
+    title,
+    subTitle,
+    featuredTestimonial,
+    column1,
+    column2,
+    column3,
+    column4,
+  } = props
+  const testimonials = [
+    [column1, column2],
+    [column3, column4],
+  ]
+
   return (
     <div className="relative isolate bg-white pb-32 pt-24 sm:pt-32">
       <div
@@ -96,34 +187,37 @@ export function TestimonialSection() {
       <Container>
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-lg font-semibold leading-8 tracking-tight text-primary">
-            Testimonials
+            {title}
           </h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            We have worked with thousands of amazing people
+            {subTitle}
           </p>
         </div>
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 grid-rows-1 gap-8 text-sm leading-6 text-gray-900 sm:mt-20 sm:grid-cols-2 xl:mx-0 xl:max-w-none xl:grid-flow-col xl:grid-cols-4">
           <figure className="rounded-2xl bg-white shadow-lg ring-1 ring-gray-900/5 sm:col-span-2 xl:col-start-2 xl:row-end-1">
             <blockquote className="p-6 text-lg font-semibold leading-7 tracking-tight text-gray-900 sm:p-12 sm:text-xl sm:leading-8">
-              <p>{`“${featuredTestimonial.body}”`}</p>
+              <p>{`“${featuredTestimonial.text}”`}</p>
             </blockquote>
             <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-4 border-t border-gray-900/10 px-6 py-4 sm:flex-nowrap">
-              <img
-                className="h-10 w-10 flex-none rounded-full bg-gray-50"
-                src={featuredTestimonial.author.imageUrl}
-                alt=""
-              />
+              <div className="h-10 w-10 flex-none rounded-full">
+                <DatoImage
+                  data={featuredTestimonial.authorImage.responsiveImage}
+                  className="rounded-full"
+                />
+              </div>
               <div className="flex-auto">
                 <div className="font-semibold">
-                  {featuredTestimonial.author.name}
+                  {featuredTestimonial.authorName}
                 </div>
-                <div className="text-gray-600">{`@${featuredTestimonial.author.handle}`}</div>
+                <div className="text-gray-600">{`@${featuredTestimonial.authorTwitterHandle}`}</div>
               </div>
-              <img
-                className="h-10 w-auto flex-none"
-                src={featuredTestimonial.author.logoUrl}
-                alt=""
-              />
+              {featuredTestimonial?.authorLogo?.url && (
+                <img
+                  className="h-10 w-auto flex-none"
+                  src={featuredTestimonial.authorLogo.url}
+                  alt=""
+                />
+              )}
             </figcaption>
           </figure>
           {testimonials.map((columnGroup, columnGroupIdx) => (
@@ -145,23 +239,24 @@ export function TestimonialSection() {
                 >
                   {column.map((testimonial) => (
                     <figure
-                      key={testimonial.author.handle}
+                      key={testimonial.authorTwitterHandle}
                       className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-900/5"
                     >
                       <blockquote className="text-gray-900">
-                        <p>{`“${testimonial.body}”`}</p>
+                        <p>{`“${testimonial.text}”`}</p>
                       </blockquote>
                       <figcaption className="mt-6 flex items-center gap-x-4">
-                        <img
-                          className="h-10 w-10 rounded-full bg-gray-50"
-                          src={testimonial.author.imageUrl}
-                          alt=""
-                        />
+                        <div className="h-10 w-10 rounded-full bg-gray-50">
+                          <DatoImage
+                            data={testimonial.authorImage.responsiveImage}
+                            className="rounded-full"
+                          />
+                        </div>
                         <div>
                           <div className="font-semibold">
-                            {testimonial.author.name}
+                            {testimonial.authorName}
                           </div>
-                          <div className="text-gray-600">{`@${testimonial.author.handle}`}</div>
+                          <div className="text-gray-600">{`@${testimonial.authorTwitterHandle}`}</div>
                         </div>
                       </figcaption>
                     </figure>
