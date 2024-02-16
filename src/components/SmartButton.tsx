@@ -24,7 +24,9 @@ export const SmartButton = (
         asChild
         {...rest}
       >
-        <a href={externalLink}>{label}</a>
+        <a href={externalLink} target="_blank">
+          {label}
+        </a>
       </Button>
     )
   }

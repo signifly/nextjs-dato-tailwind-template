@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+[![Clone DatoCMS project](https://dashboard.datocms.com/clone/button.svg)](https://dashboard.datocms.com/deploy?repo=duy-the-developer%2Fnextjs-dato-tailwind-template%3Aproduction)
+
 First, run the development server:
 
 ```bash

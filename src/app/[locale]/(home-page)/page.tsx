@@ -13,6 +13,7 @@ function getPageRequest(locale: Locale) {
     query: HOME_PAGE_QUERY,
     includeDrafts: isEnabled,
     variables: { locale },
+    revalidate: 10,
   }
 }
 

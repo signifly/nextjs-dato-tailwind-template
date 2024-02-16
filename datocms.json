@@ -16,10 +16,6 @@
     "NEXT_DATOCMS_PREVIEW_SECRET": {
       "type": "string",
       "value": "shhh"
-    },
-    "NEXT_DATOCMS_API_TOKEN": {
-      "type": "datocmsAccessToken",
-      "tokenName": "Full-access API Token"
     }
   },
   "buildCommand": "yarn build",

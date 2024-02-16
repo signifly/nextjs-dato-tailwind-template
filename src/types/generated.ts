@@ -306,7 +306,10 @@ export type CtaSectionRecord = RecordInterface & {
   _status: ItemStatus
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>
   _updatedAt: Scalars['DateTime']['output']
+  buttons: Array<ButtonRecord>
   id: Scalars['ItemId']['output']
+  subTitle: Scalars['String']['output']
+  title: Scalars['String']['output']
 }
 
 /** Block of type CTA Section (cta_section) */
@@ -3937,7 +3940,7 @@ export type BannerSectionFragmentFragment = {
   text: string
 }
 
-export type FaqSectionFragment = {
+export type FaqSectionFragmentFragment = {
   __typename?: 'FaqSectionRecord'
   id: string
   _modelApiKey: string
@@ -4469,12 +4472,12 @@ export const BannerSectionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BannerSectionFragmentFragment, unknown>
-export const FaqSectionFragmentDoc = {
+export const FaqSectionFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'FaqSection' },
+      name: { kind: 'Name', value: 'FaqSectionFragment' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'FaqSectionRecord' },
@@ -4501,7 +4504,7 @@ export const FaqSectionFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<FaqSectionFragment, unknown>
+} as unknown as DocumentNode<FaqSectionFragmentFragment, unknown>
 export const ResponsiveImageFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
