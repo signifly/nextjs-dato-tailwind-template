@@ -12,6 +12,14 @@
     "NEXT_DATOCMS_READ_ONLY_API_TOKEN": {
       "type": "datocmsAccessToken",
       "tokenName": "Read-only API token"
+    },
+    "NEXT_DATOCMS_API_TOKEN": {
+      "type": "datocmsAccessToken",
+      "tokenName": "Full-access API token"
+    },
+    "NEXT_DATOCMS_PREVIEW_SECRET": {
+      "type": "string",
+      "value": "shhh"
     }
   },
   "buildCommand": "yarn build",
