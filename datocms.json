@@ -5,18 +5,13 @@
   "livePreviewUrl": "https://nextjs-dato-tailwind-template-icvunxy3l-duy-the-developer.vercel.app/en",
   "datocmsProjectId": "119644",
   "deploymentType": "vercel",
-  "datocmsApiTokenEnvName": "NEXT_DATOCMS_READ_ONLY_API_TOKEN",
   "environmentVariables": {
     "DATOCMS_BACKEND_URL": {
       "type": "datocmsProjectUrl"
     },
     "NEXT_DATOCMS_READ_ONLY_API_TOKEN": {
       "type": "datocmsAccessToken",
-      "tokenName": "Read-only API Token"
-    },
-    "NEXT_DATOCMS_PREVIEW_SECRET": {
-      "type": "string",
-      "value": "shhh"
+      "tokenName": "Read-only API token"
     }
   },
   "buildCommand": "yarn build",
